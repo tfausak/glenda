@@ -17,3 +17,13 @@ ghc-options:
 
 library:
   source-dirs: library
+
+tests:
+  test:
+    dependencies:
+      glenda: -any
+    ghc-options:
+      - -rtsopts
+      - -threaded
+    main: Main.hs
+    source-dirs: tests
