@@ -18,6 +18,11 @@ module Glenda.Render
   , renderOctalLit
   , renderHexLit
   , renderX
+  , renderFloatLit
+  , renderDecimals
+  , renderExponent
+  , renderE
+  , renderSign
   ) where
 
 import qualified Glenda.Language as Go
@@ -129,9 +134,42 @@ renderOctalLit :: Render Go.OctalLit
 renderOctalLit (Go.OctalLit x) = mappend "0" . renderList renderOctalDigit x
 
 renderHexLit :: Render Go.HexLit
-renderHexLit (Go.HexLit x y z) = mappend "0" . renderX x . renderHexDigit y . renderList renderHexDigit z
+renderHexLit (Go.HexLit x y z) =
+  mappend "0" . renderX x . renderHexDigit y . renderList renderHexDigit z
 
 renderX :: Render Go.X
 renderX x = case x of
   Go.X_Upper -> mappend "X"
   Go.X_Lower -> mappend "x"
+
+renderFloatLit :: Render Go.FloatLit
+renderFloatLit x = case x of
+  Go.FloatLit_Trailing y z a ->
+    renderDecimals y
+    . mappend "."
+    . renderMaybe renderDecimals z
+    . renderMaybe renderExponent a
+  Go.FloatLit_Exponent y z -> renderDecimals y . renderExponent z
+  Go.FloatLit_Leading y z ->
+    mappend "." . renderDecimals y . renderMaybe renderExponent z
+
+renderMaybe :: Render a -> Render (Maybe a)
+renderMaybe f m = maybe id f m
+
+renderDecimals :: Render Go.Decimals
+renderDecimals (Go.Decimals x y) =
+  renderDecimalDigit x . renderList renderDecimalDigit y
+
+renderExponent :: Render Go.Exponent
+renderExponent (Go.Exponent x y z) =
+  renderE x . renderMaybe renderSign y . renderDecimals z
+
+renderE :: Render Go.E
+renderE x = case x of
+  Go.E_Upper -> mappend "E"
+  Go.E_Lower -> mappend "e"
+
+renderSign :: Render Go.Sign
+renderSign x = case x of
+  Go.Sign_Positive -> mappend "+"
+  Go.Sign_Negative -> mappend "-"

@@ -265,6 +265,21 @@ module Glenda (
   -- > 1E6
   -- > .25
   -- > .12345E+5
+  Language.FloatLit(..),
+  Parse.parseFloatLit,
+  Render.renderFloatLit,
+  Language.Decimals(..),
+  Parse.parseDecimals,
+  Render.renderDecimals,
+  Language.Exponent(..),
+  Parse.parseExponent,
+  Render.renderExponent,
+  Language.E(..),
+  Parse.parseE,
+  Render.renderE,
+  Language.Sign(..),
+  Parse.parseSign,
+  Render.renderSign,
 
   -- ** #Imaginary_literals# Imaginary literals
   -- | An imaginary literal is a decimal representation of the imaginary part

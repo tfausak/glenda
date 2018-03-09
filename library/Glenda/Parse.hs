@@ -22,6 +22,11 @@ module Glenda.Parse
   , parseOctalLit
   , parseHexLit
   , parseX
+  , parseFloatLit
+  , parseDecimals
+  , parseExponent
+  , parseE
+  , parseSign
   ) where
 
 import Data.Functor ((<$))
@@ -188,4 +193,40 @@ parseX :: Parse Go.X
 parseX = Parse.choice
   [ Go.X_Upper <$ Parse.char 'X'
   , Go.X_Lower <$ Parse.char 'x'
+  ]
+
+parseFloatLit :: Parse Go.FloatLit
+parseFloatLit = Parse.choice
+  [ Go.FloatLit_Trailing
+    <$> (parseDecimals <* Parse.char '.')
+    <*> parseMaybe parseDecimals
+    <*> parseMaybe parseExponent
+  , Go.FloatLit_Exponent <$> parseDecimals <*> parseExponent
+  , Go.FloatLit_Leading <$> parseDecimals <*> parseMaybe parseExponent
+  ]
+
+parseMaybe :: Parse a -> Parse (Maybe a)
+parseMaybe parse = Parse.option Nothing (Just <$> parse)
+
+parseDecimals :: Parse Go.Decimals
+parseDecimals = Go.Decimals
+  <$> parseDecimalDigit
+  <*> Parse.many parseDecimalDigit
+
+parseExponent :: Parse Go.Exponent
+parseExponent = Go.Exponent
+  <$> parseE
+  <*> parseMaybe parseSign
+  <*> parseDecimals
+
+parseE :: Parse Go.E
+parseE = Parse.choice
+  [ Go.E_Upper <$ Parse.char 'E'
+  , Go.E_Lower <$ Parse.char 'e'
+  ]
+
+parseSign :: Parse Go.Sign
+parseSign = Parse.choice
+  [ Go.Sign_Positive <$ Parse.char '+'
+  , Go.Sign_Negative <$ Parse.char '-'
   ]

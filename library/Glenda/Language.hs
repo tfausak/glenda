@@ -16,6 +16,11 @@ module Glenda.Language
   , OctalLit(..)
   , HexLit(..)
   , X(..)
+  , FloatLit(..)
+  , Decimals(..)
+  , Exponent(..)
+  , E(..)
+  , Sign(..)
   ) where
 
 data Newline
@@ -125,4 +130,28 @@ data HexLit
 data X
   = X_Upper
   | X_Lower
+  deriving (Eq, Show)
+
+data FloatLit
+  = FloatLit_Trailing Decimals (Maybe Decimals) (Maybe Exponent)
+  | FloatLit_Exponent Decimals Exponent
+  | FloatLit_Leading Decimals (Maybe Exponent)
+  deriving (Eq, Show)
+
+data Decimals
+  = Decimals DecimalDigit [DecimalDigit]
+  deriving (Eq, Show)
+
+data Exponent
+  = Exponent E (Maybe Sign) Decimals
+  deriving (Eq, Show)
+
+data E
+  = E_Upper
+  | E_Lower
+  deriving (Eq, Show)
+
+data Sign
+  = Sign_Positive
+  | Sign_Negative
   deriving (Eq, Show)

@@ -114,6 +114,36 @@ main = runTests
   , Test "renderX"
     (Go.runRender Go.renderX Go.X_Lower)
     "x"
+  , Test "parseFloatLit"
+    (Go.runParse Go.parseFloatLit "0.")
+    (Just (Go.FloatLit_Trailing (Go.Decimals Go.DecimalDigit_0 []) Nothing Nothing))
+  , Test "renderFloatLit"
+    (Go.runRender Go.renderFloatLit (Go.FloatLit_Trailing (Go.Decimals Go.DecimalDigit_0 []) Nothing Nothing))
+    "0."
+  , Test "parseDecimals"
+    (Go.runParse Go.parseDecimals "0")
+    (Just (Go.Decimals Go.DecimalDigit_0 []))
+  , Test "renderDecimals"
+    (Go.runRender Go.renderDecimals (Go.Decimals Go.DecimalDigit_0 []))
+    "0"
+  , Test "parseExponent"
+    (Go.runParse Go.parseExponent "e0")
+    (Just (Go.Exponent Go.E_Lower Nothing (Go.Decimals Go.DecimalDigit_0 [])))
+  , Test "renderExponent"
+    (Go.runRender Go.renderExponent (Go.Exponent Go.E_Lower Nothing (Go.Decimals Go.DecimalDigit_0 [])))
+    "e0"
+  , Test "parseE"
+    (Go.runParse Go.parseE "e")
+    (Just Go.E_Lower)
+  , Test "renderE"
+    (Go.runRender Go.renderE Go.E_Lower)
+    "e"
+  , Test "parseSign"
+    (Go.runParse Go.parseSign "+")
+    (Just Go.Sign_Positive)
+  , Test "renderSign"
+    (Go.runRender Go.renderSign Go.Sign_Positive)
+    "+"
   ]
 
 runTests :: [Test] -> IO ()
