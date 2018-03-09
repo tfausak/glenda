@@ -143,6 +143,7 @@ module Glenda (
   -- Also, a newline or end of file may trigger the insertion of a
   -- <#Semicolons semicolon>. While breaking the input into tokens, the next
   -- token is the longest sequence of characters that form a valid token.
+  Parse.parseWhiteSpace,
 
   -- ** #Semicolons# Semicolons
   -- | The formal grammar uses semicolons @\";\"@ as terminators in a number of

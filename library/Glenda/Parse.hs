@@ -14,6 +14,7 @@ module Glenda.Parse
   , parseComment
   , parseLineComment
   , parseGeneralComment
+  , parseWhiteSpace
   ) where
 
 import Data.Functor ((<$))
@@ -104,16 +105,29 @@ parseHexDigit = Parse.choice
   , Go.HexDigit_f <$ Parse.char 'f'
   ]
 
-parseComment :: Parse String
+parseComment :: Parse Char
 parseComment = Parse.choice
   [ parseLineComment
   , parseGeneralComment
   ]
 
-parseLineComment :: Parse String
-parseLineComment =
-  Parse.string "//" *> Parse.manyTill Parse.get (Parse.char '\n')
+parseLineComment :: Parse Char
+parseLineComment = do
+  _ <- Parse.string "//"
+  _ <- Parse.manyTill Parse.get (Parse.char '\n')
+  pure '\n'
 
-parseGeneralComment :: Parse String
-parseGeneralComment =
-  Parse.string "/*" *> Parse.manyTill Parse.get (Parse.string "*/")
+parseGeneralComment :: Parse Char
+parseGeneralComment = do
+  _ <- Parse.string "/*"
+  x <- Parse.manyTill Parse.get (Parse.string "*/")
+  pure (if elem '\n' x then '\n' else ' ')
+
+parseWhiteSpace :: Parse String
+parseWhiteSpace = Parse.many (Parse.choice
+  [ Parse.char ' '
+  , Parse.char '\t'
+  , Parse.char '\r'
+  , Parse.char '\n'
+  , parseComment
+  ])

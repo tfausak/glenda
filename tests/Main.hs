@@ -62,12 +62,15 @@ main = runTests
     "0"
   , Test "parseComment"
     (Go.runParse Go.parseComment "//\n")
-    (Just "")
+    (Just '\n')
   , Test "parseLineComment"
     (Go.runParse Go.parseLineComment "//\n")
-    (Just "")
+    (Just '\n')
   , Test "parseGeneralComment"
     (Go.runParse Go.parseGeneralComment "/**/")
+    (Just ' ')
+  , Test "parseWhiteSpace"
+    (Go.runParse Go.parseWhiteSpace "")
     (Just "")
   ]
 
