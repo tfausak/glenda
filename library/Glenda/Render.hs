@@ -23,6 +23,7 @@ module Glenda.Render
   , renderExponent
   , renderE
   , renderSign
+  , renderImaginaryLit
   ) where
 
 import qualified Glenda.Language as Go
@@ -173,3 +174,8 @@ renderSign :: Render Go.Sign
 renderSign x = case x of
   Go.Sign_Positive -> mappend "+"
   Go.Sign_Negative -> mappend "-"
+
+renderImaginaryLit :: Render Go.ImaginaryLit
+renderImaginaryLit (Go.ImaginaryLit x) = case x of
+  Left y -> renderDecimals y . mappend "i"
+  Right y -> renderFloatLit y . mappend "i"

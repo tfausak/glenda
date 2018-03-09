@@ -27,6 +27,7 @@ module Glenda.Parse
   , parseExponent
   , parseE
   , parseSign
+  , parseImaginaryLit
   ) where
 
 import Data.Functor ((<$))
@@ -230,3 +231,8 @@ parseSign = Parse.choice
   [ Go.Sign_Positive <$ Parse.char '+'
   , Go.Sign_Negative <$ Parse.char '-'
   ]
+
+parseImaginaryLit :: Parse Go.ImaginaryLit
+parseImaginaryLit =
+  (Go.ImaginaryLit <$> parseEither parseDecimals parseFloatLit)
+  <* Parse.char 'i'

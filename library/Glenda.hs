@@ -298,6 +298,9 @@ module Glenda (
   -- > 1E6i
   -- > .25i
   -- > .12345E+5i
+  Language.ImaginaryLit(..),
+  Parse.parseImaginaryLit,
+  Render.renderImaginaryLit,
 
   -- ** #Rune_literals# Rune literals
   -- | A rune literal represents a <#Constants rune constant>, an integer value

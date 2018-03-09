@@ -21,6 +21,7 @@ module Glenda.Language
   , Exponent(..)
   , E(..)
   , Sign(..)
+  , ImaginaryLit(..)
   ) where
 
 data Newline
@@ -154,4 +155,8 @@ data E
 data Sign
   = Sign_Positive
   | Sign_Negative
+  deriving (Eq, Show)
+
+newtype ImaginaryLit
+  = ImaginaryLit (Either Decimals FloatLit)
   deriving (Eq, Show)

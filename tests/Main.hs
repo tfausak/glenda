@@ -144,6 +144,12 @@ main = runTests
   , Test "renderSign"
     (Go.runRender Go.renderSign Go.Sign_Positive)
     "+"
+  , Test "parseImaginaryLit"
+    (Go.runParse Go.parseImaginaryLit "0i")
+    (Just (Go.ImaginaryLit (Left (Go.Decimals Go.DecimalDigit_0 []))))
+  , Test "renderImaginaryLit"
+    (Go.runRender Go.renderImaginaryLit (Go.ImaginaryLit (Left (Go.Decimals Go.DecimalDigit_0 []))))
+    "0i"
   ]
 
 runTests :: [Test] -> IO ()
