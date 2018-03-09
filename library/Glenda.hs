@@ -84,12 +84,16 @@ module Glenda (
   -- or Lo as Unicode letters, and those in the Number category Nd as Unicode
   -- digits.
   Language.Newline(..),
-  Language.UnicodeChar(..),
-  Language.UnicodeLetter(..),
-  Language.UnicodeDigit(..),
+  Parse.parseNewline,
   Render.renderNewline,
+  Language.UnicodeChar(..),
+  Parse.parseUnicodeChar,
   Render.renderUnicodeChar,
+  Language.UnicodeLetter(..),
+  Parse.parseUnicodeLetter,
   Render.renderUnicodeLetter,
+  Language.UnicodeDigit(..),
+  Parse.parseUnicodeDigit,
   Render.renderUnicodeDigit,
 
   -- ** #Letters_and_digits# Letters and digits
@@ -4470,10 +4474,13 @@ module Glenda (
   -- to be a useful Haskell module.
   Version.version,
   Version.versionString,
+  Parse.Parse,
+  Parse.runParse,
   Render.Render,
   Render.runRender,
 ) where
 
 import qualified Glenda.Language as Language
+import qualified Glenda.Parse as Parse
 import qualified Glenda.Render as Render
 import qualified Glenda.Version as Version

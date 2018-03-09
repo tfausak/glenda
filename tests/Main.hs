@@ -12,7 +12,19 @@ import qualified Text.Printf as Printf
 
 main :: IO ()
 main = runTests
-  [ Test "renderNewline"
+  [ Test "parseNewline"
+    (Go.runParse Go.parseNewline "\n")
+    (Just Go.Newline)
+  , Test "parseUnicodeChar"
+    (Go.runParse Go.parseUnicodeChar "!")
+    (Just (Go.UnicodeChar '!'))
+  , Test "parseUnicodeLetter"
+    (Go.runParse Go.parseUnicodeLetter "A")
+    (Just (Go.UnicodeLetter 'A'))
+  , Test "parseUnicodeDigit"
+    (Go.runParse Go.parseUnicodeDigit "0")
+    (Just (Go.UnicodeDigit '0'))
+  , Test "renderNewline"
     (Go.runRender Go.renderNewline Go.Newline)
     "\n"
   , Test "renderUnicodeChar"

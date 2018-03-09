@@ -11,12 +11,11 @@ module Glenda.Render
 
 import qualified Glenda.Language as Go
 
--- | Returns a function that prepends the output to an existing string. This
--- allows for constant time concatenation. See 'ShowS' for details. Use
--- 'runRender' to convert directly into a string.
+-- | See 'ShowS' for details. Use 'runRender' to convert directly into a
+-- string.
 type Render input = input -> ShowS
 
--- | Converts something directly into a string.
+-- | Converts a value to a string..
 runRender :: Render input -> input -> String
 runRender render input = render input ""
 
