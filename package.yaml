@@ -15,4 +15,5 @@ ghc-options:
   - -Wno-implicit-prelude
   - -Wno-safe
 
-library: {}
+library:
+  source-dirs: library
