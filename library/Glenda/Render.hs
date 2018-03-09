@@ -176,6 +176,6 @@ renderSign x = case x of
   Go.Sign_Negative -> mappend "-"
 
 renderImaginaryLit :: Render Go.ImaginaryLit
-renderImaginaryLit (Go.ImaginaryLit x) = case x of
-  Left y -> renderDecimals y . mappend "i"
-  Right y -> renderFloatLit y . mappend "i"
+renderImaginaryLit x = case x of
+  Go.ImaginaryLit_Decimals y -> renderDecimals y . mappend "i"
+  Go.ImaginaryLit_FloatLit y -> renderFloatLit y . mappend "i"

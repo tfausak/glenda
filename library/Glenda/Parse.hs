@@ -233,6 +233,7 @@ parseSign = Parse.choice
   ]
 
 parseImaginaryLit :: Parse Go.ImaginaryLit
-parseImaginaryLit =
-  (Go.ImaginaryLit <$> parseEither parseDecimals parseFloatLit)
-  <* Parse.char 'i'
+parseImaginaryLit = Parse.choice
+  [ Go.ImaginaryLit_Decimals <$> (parseDecimals <* Parse.char 'i')
+  , Go.ImaginaryLit_FloatLit <$> (parseFloatLit <* Parse.char 'i')
+  ]

@@ -157,6 +157,7 @@ data Sign
   | Sign_Negative
   deriving (Eq, Show)
 
-newtype ImaginaryLit
-  = ImaginaryLit (Either Decimals FloatLit)
+data ImaginaryLit
+  = ImaginaryLit_Decimals Decimals
+  | ImaginaryLit_FloatLit FloatLit
   deriving (Eq, Show)

@@ -146,9 +146,9 @@ main = runTests
     "+"
   , Test "parseImaginaryLit"
     (Go.runParse Go.parseImaginaryLit "0i")
-    (Just (Go.ImaginaryLit (Left (Go.Decimals Go.DecimalDigit_0 []))))
+    (Just (Go.ImaginaryLit_Decimals (Go.Decimals Go.DecimalDigit_0 [])))
   , Test "renderImaginaryLit"
-    (Go.runRender Go.renderImaginaryLit (Go.ImaginaryLit (Left (Go.Decimals Go.DecimalDigit_0 []))))
+    (Go.runRender Go.renderImaginaryLit (Go.ImaginaryLit_Decimals (Go.Decimals Go.DecimalDigit_0 [])))
     "0i"
   ]
 
