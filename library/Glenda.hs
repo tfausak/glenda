@@ -103,6 +103,18 @@ module Glenda (
   -- > decimal_digit = "0" … "9" .
   -- > octal_digit   = "0" … "7" .
   -- > hex_digit     = "0" … "9" | "A" … "F" | "a" … "f" .
+  Language.Letter(..),
+  Parse.parseLetter,
+  Render.renderLetter,
+  Language.DecimalDigit(..),
+  Parse.parseDecimalDigit,
+  Render.renderDecimalDigit,
+  Language.OctalDigit(..),
+  Parse.parseOctalDigit,
+  Render.renderOctalDigit,
+  Language.HexDigit(..),
+  Parse.parseHexDigit,
+  Render.renderHexDigit,
 
   -- * #Lexical_elements# Lexical elements
 

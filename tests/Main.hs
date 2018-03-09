@@ -15,26 +15,50 @@ main = runTests
   [ Test "parseNewline"
     (Go.runParse Go.parseNewline "\n")
     (Just Go.Newline)
-  , Test "parseUnicodeChar"
-    (Go.runParse Go.parseUnicodeChar "!")
-    (Just (Go.UnicodeChar '!'))
-  , Test "parseUnicodeLetter"
-    (Go.runParse Go.parseUnicodeLetter "A")
-    (Just (Go.UnicodeLetter 'A'))
-  , Test "parseUnicodeDigit"
-    (Go.runParse Go.parseUnicodeDigit "0")
-    (Just (Go.UnicodeDigit '0'))
   , Test "renderNewline"
     (Go.runRender Go.renderNewline Go.Newline)
     "\n"
+  , Test "parseUnicodeChar"
+    (Go.runParse Go.parseUnicodeChar "!")
+    (Just (Go.UnicodeChar '!'))
   , Test "renderUnicodeChar"
     (Go.runRender Go.renderUnicodeChar (Go.UnicodeChar '!'))
     "!"
+  , Test "parseUnicodeLetter"
+    (Go.runParse Go.parseUnicodeLetter "A")
+    (Just (Go.UnicodeLetter 'A'))
   , Test "renderUnicodeLetter"
     (Go.runRender Go.renderUnicodeLetter (Go.UnicodeLetter 'A'))
     "A"
+  , Test "parseUnicodeDigit"
+    (Go.runParse Go.parseUnicodeDigit "0")
+    (Just (Go.UnicodeDigit '0'))
   , Test "renderUnicodeDigit"
     (Go.runRender Go.renderUnicodeDigit (Go.UnicodeDigit '0'))
+    "0"
+  , Test "parseLetter"
+    (Go.runParse Go.parseLetter "_")
+    (Just Go.Letter_Underscore)
+  , Test "renderLetter"
+    (Go.runRender Go.renderLetter (Go.Letter_Underscore))
+    "_"
+  , Test "parseDecimalDigit"
+    (Go.runParse Go.parseDecimalDigit "0")
+    (Just Go.DecimalDigit_0)
+  , Test "renderDecimalDigit"
+    (Go.runRender Go.renderDecimalDigit (Go.DecimalDigit_0))
+    "0"
+  , Test "parseOctalDigit"
+    (Go.runParse Go.parseOctalDigit "0")
+    (Just Go.OctalDigit_0)
+  , Test "renderOctalDigit"
+    (Go.runRender Go.renderOctalDigit (Go.OctalDigit_0))
+    "0"
+  , Test "parseOctalDigit"
+    (Go.runParse Go.parseHexDigit "0")
+    (Just Go.HexDigit_0)
+  , Test "renderHexDigit"
+    (Go.runRender Go.renderHexDigit (Go.HexDigit_0))
     "0"
   ]
 
