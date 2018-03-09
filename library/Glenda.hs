@@ -87,6 +87,10 @@ module Glenda (
   Language.UnicodeChar(..),
   Language.UnicodeLetter(..),
   Language.UnicodeDigit(..),
+  Render.renderNewline,
+  Render.renderUnicodeChar,
+  Render.renderUnicodeLetter,
+  Render.renderUnicodeDigit,
 
   -- ** #Letters_and_digits# Letters and digits
   -- | The underscore character @_@ (U+005F) is considered a letter.
@@ -4466,7 +4470,10 @@ module Glenda (
   -- to be a useful Haskell module.
   Version.version,
   Version.versionString,
+  Render.Render,
+  Render.runRender,
 ) where
 
 import qualified Glenda.Language as Language
+import qualified Glenda.Render as Render
 import qualified Glenda.Version as Version
