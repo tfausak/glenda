@@ -10,6 +10,12 @@ module Glenda.Language
   , OctalDigit(..)
   , HexDigit(..)
   , Identifier(..)
+  , IntLit(..)
+  , DecimalLit(..)
+  , NonZeroDecimalDigit(..)
+  , OctalLit(..)
+  , HexLit(..)
+  , X(..)
   ) where
 
 data Newline
@@ -84,4 +90,39 @@ data HexDigit
 
 data Identifier
   = Identifier Letter [Either Letter UnicodeDigit]
+  deriving (Eq, Show)
+
+data IntLit
+  = IntLit_DecimalLit DecimalLit
+  | IntLit_OctalLit OctalLit
+  | IntLit_HexLit HexLit
+  deriving (Eq, Show)
+
+data DecimalLit
+  = DecimalLit NonZeroDecimalDigit [DecimalDigit]
+  deriving (Eq, Show)
+
+data NonZeroDecimalDigit
+  = NonZeroDecimalDigit_1
+  | NonZeroDecimalDigit_2
+  | NonZeroDecimalDigit_3
+  | NonZeroDecimalDigit_4
+  | NonZeroDecimalDigit_5
+  | NonZeroDecimalDigit_6
+  | NonZeroDecimalDigit_7
+  | NonZeroDecimalDigit_8
+  | NonZeroDecimalDigit_9
+  deriving (Eq, Show)
+
+newtype OctalLit
+  = OctalLit [OctalDigit]
+  deriving (Eq, Show)
+
+data HexLit
+  = HexLit X HexDigit [HexDigit]
+  deriving (Eq, Show)
+
+data X
+  = X_Upper
+  | X_Lower
   deriving (Eq, Show)

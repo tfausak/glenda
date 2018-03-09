@@ -12,6 +12,12 @@ module Glenda.Render
   , renderOctalDigit
   , renderHexDigit
   , renderIdentifier
+  , renderIntLit
+  , renderDecimalLit
+  , renderNonZeroDecimalDigit
+  , renderOctalLit
+  , renderHexLit
+  , renderX
   ) where
 
 import qualified Glenda.Language as Go
@@ -96,3 +102,36 @@ renderIdentifier (Go.Identifier x y) =
 
 renderList :: Render element -> Render [element]
 renderList f xs = foldr (\ x g -> f x . g) id xs
+
+renderIntLit :: Render Go.IntLit
+renderIntLit x = case x of
+  Go.IntLit_DecimalLit y -> renderDecimalLit y
+  Go.IntLit_OctalLit y -> renderOctalLit y
+  Go.IntLit_HexLit y -> renderHexLit y
+
+renderDecimalLit :: Render Go.DecimalLit
+renderDecimalLit (Go.DecimalLit x y) =
+  renderNonZeroDecimalDigit x . renderList renderDecimalDigit y
+
+renderNonZeroDecimalDigit :: Render Go.NonZeroDecimalDigit
+renderNonZeroDecimalDigit x = case x of
+  Go.NonZeroDecimalDigit_1 -> mappend "1"
+  Go.NonZeroDecimalDigit_2 -> mappend "2"
+  Go.NonZeroDecimalDigit_3 -> mappend "3"
+  Go.NonZeroDecimalDigit_4 -> mappend "4"
+  Go.NonZeroDecimalDigit_5 -> mappend "5"
+  Go.NonZeroDecimalDigit_6 -> mappend "6"
+  Go.NonZeroDecimalDigit_7 -> mappend "7"
+  Go.NonZeroDecimalDigit_8 -> mappend "8"
+  Go.NonZeroDecimalDigit_9 -> mappend "9"
+
+renderOctalLit :: Render Go.OctalLit
+renderOctalLit (Go.OctalLit x) = mappend "0" . renderList renderOctalDigit x
+
+renderHexLit :: Render Go.HexLit
+renderHexLit (Go.HexLit x y z) = mappend "0" . renderX x . renderHexDigit y . renderList renderHexDigit z
+
+renderX :: Render Go.X
+renderX x = case x of
+  Go.X_Upper -> mappend "X"
+  Go.X_Lower -> mappend "x"

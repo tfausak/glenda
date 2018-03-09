@@ -222,6 +222,24 @@ module Glenda (
   -- > 0600
   -- > 0xBadFace
   -- > 170141183460469231731687303715884105727
+  Language.IntLit(..),
+  Parse.parseIntLit,
+  Render.renderIntLit,
+  Language.DecimalLit(..),
+  Parse.parseDecimalLit,
+  Render.renderDecimalLit,
+  Language.NonZeroDecimalDigit(..),
+  Parse.parseNonZeroDecimalDigit,
+  Render.renderNonZeroDecimalDigit,
+  Language.OctalLit(..),
+  Parse.parseOctalLit,
+  Render.renderOctalLit,
+  Language.HexLit(..),
+  Parse.parseHexLit,
+  Render.renderHexLit,
+  Language.X(..),
+  Parse.parseX,
+  Render.renderX,
 
   -- ** #Floating-point_literals# Floating-point literals
   -- | A floating-point literal is a decimal representation of a

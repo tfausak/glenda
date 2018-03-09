@@ -78,6 +78,42 @@ main = runTests
   , Test "renderIdentifier"
     (Go.runRender Go.renderIdentifier (Go.Identifier Go.Letter_Underscore []))
     "_"
+  , Test "parseIntLit"
+    (Go.runParse Go.parseIntLit "0")
+    (Just (Go.IntLit_OctalLit (Go.OctalLit [])))
+  , Test "renderIntLit"
+    (Go.runRender Go.renderIntLit (Go.IntLit_OctalLit (Go.OctalLit [])))
+    "0"
+  , Test "parseDecimalLit"
+    (Go.runParse Go.parseDecimalLit "1")
+    (Just (Go.DecimalLit Go.NonZeroDecimalDigit_1 []))
+  , Test "renderDecimalLit"
+    (Go.runRender Go.renderDecimalLit (Go.DecimalLit Go.NonZeroDecimalDigit_1 []))
+    "1"
+  , Test "parseNonZeroDecimalDigit"
+    (Go.runParse Go.parseNonZeroDecimalDigit "1")
+    (Just Go.NonZeroDecimalDigit_1)
+  , Test "renderNonZeroDecimalDigit"
+    (Go.runRender Go.renderNonZeroDecimalDigit Go.NonZeroDecimalDigit_1)
+    "1"
+  , Test "parseOctalLit"
+    (Go.runParse Go.parseOctalLit "0")
+    (Just (Go.OctalLit []))
+  , Test "renderOctalLit"
+    (Go.runRender Go.renderOctalLit (Go.OctalLit []))
+    "0"
+  , Test "parseHexLit"
+    (Go.runParse Go.parseHexLit "0x0")
+    (Just (Go.HexLit Go.X_Lower Go.HexDigit_0 []))
+  , Test "renderHexLit"
+    (Go.runRender Go.renderHexLit (Go.HexLit Go.X_Lower Go.HexDigit_0 []))
+    "0x0"
+  , Test "parseX"
+    (Go.runParse Go.parseX "x")
+    (Just Go.X_Lower)
+  , Test "renderX"
+    (Go.runRender Go.renderX Go.X_Lower)
+    "x"
   ]
 
 runTests :: [Test] -> IO ()

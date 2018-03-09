@@ -16,6 +16,12 @@ module Glenda.Parse
   , parseGeneralComment
   , parseWhiteSpace
   , parseIdentifier
+  , parseIntLit
+  , parseDecimalLit
+  , parseNonZeroDecimalDigit
+  , parseOctalLit
+  , parseHexLit
+  , parseX
   ) where
 
 import Data.Functor ((<$))
@@ -142,4 +148,44 @@ parseEither :: Parse left -> Parse right -> Parse (Either left right)
 parseEither parseLeft parseRight = Parse.choice
   [ Left <$> parseLeft
   , Right <$> parseRight
+  ]
+
+parseIntLit :: Parse Go.IntLit
+parseIntLit = Parse.choice
+  [ Go.IntLit_DecimalLit <$> parseDecimalLit
+  , Go.IntLit_OctalLit <$> parseOctalLit
+  , Go.IntLit_HexLit <$> parseHexLit
+  ]
+
+parseDecimalLit :: Parse Go.DecimalLit
+parseDecimalLit = Go.DecimalLit
+  <$> parseNonZeroDecimalDigit
+  <*> Parse.many parseDecimalDigit
+
+parseNonZeroDecimalDigit :: Parse Go.NonZeroDecimalDigit
+parseNonZeroDecimalDigit = Parse.choice
+  [ Go.NonZeroDecimalDigit_1 <$ Parse.char '1'
+  , Go.NonZeroDecimalDigit_2 <$ Parse.char '2'
+  , Go.NonZeroDecimalDigit_3 <$ Parse.char '3'
+  , Go.NonZeroDecimalDigit_4 <$ Parse.char '4'
+  , Go.NonZeroDecimalDigit_5 <$ Parse.char '5'
+  , Go.NonZeroDecimalDigit_6 <$ Parse.char '6'
+  , Go.NonZeroDecimalDigit_7 <$ Parse.char '7'
+  , Go.NonZeroDecimalDigit_8 <$ Parse.char '8'
+  , Go.NonZeroDecimalDigit_9 <$ Parse.char '9'
+  ]
+
+parseOctalLit :: Parse Go.OctalLit
+parseOctalLit = Parse.char '0' *> (Go.OctalLit <$> Parse.many parseOctalDigit)
+
+parseHexLit :: Parse Go.HexLit
+parseHexLit = Parse.char '0' *> (Go.HexLit
+  <$> parseX
+  <*> parseHexDigit
+  <*> Parse.many parseHexDigit)
+
+parseX :: Parse Go.X
+parseX = Parse.choice
+  [ Go.X_Upper <$ Parse.char 'X'
+  , Go.X_Lower <$ Parse.char 'x'
   ]
