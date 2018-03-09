@@ -1,0 +1,18 @@
+name: glenda
+version: 0.0.0
+
+category: Language
+description: Glenda describes the Go programming language.
+license-file: LICENSE.markdown
+license: MIT
+maintainer: Taylor Fausak
+synopsis: Describes the Go programming language.
+
+dependencies:
+  base: '>= 4.11.0 && < 4.12'
+ghc-options:
+  - -Weverything
+  - -Wno-implicit-prelude
+  - -Wno-safe
+
+library: {}
