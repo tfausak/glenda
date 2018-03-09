@@ -83,6 +83,10 @@ module Glenda (
   -- Go treats all characters in any of the Letter categories Lu, Ll, Lt, Lm,
   -- or Lo as Unicode letters, and those in the Number category Nd as Unicode
   -- digits.
+  Language.Newline(..),
+  Language.UnicodeChar(..),
+  Language.UnicodeLetter(..),
+  Language.UnicodeDigit(..),
 
   -- ** #Letters_and_digits# Letters and digits
   -- | The underscore character @_@ (U+005F) is considered a letter.
@@ -4464,4 +4468,5 @@ module Glenda (
   Version.versionString,
 ) where
 
+import qualified Glenda.Language as Language
 import qualified Glenda.Version as Version
