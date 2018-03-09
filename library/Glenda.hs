@@ -130,6 +130,9 @@ module Glenda (
   -- <#String_literals string literal>, or inside a comment. A general
   -- comment containing no newlines acts like a space. Any other comment acts
   -- like a newline.
+  Parse.parseComment,
+  Parse.parseLineComment,
+  Parse.parseGeneralComment,
 
   -- ** #Tokens# Tokens
   -- | Tokens form the vocabulary of the Go language. There are four classes:

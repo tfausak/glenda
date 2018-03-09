@@ -11,6 +11,9 @@ module Glenda.Parse
   , parseDecimalDigit
   , parseOctalDigit
   , parseHexDigit
+  , parseComment
+  , parseLineComment
+  , parseGeneralComment
   ) where
 
 import Data.Functor ((<$))
@@ -100,3 +103,17 @@ parseHexDigit = Parse.choice
   , Go.HexDigit_F <$ Parse.char 'F'
   , Go.HexDigit_f <$ Parse.char 'f'
   ]
+
+parseComment :: Parse String
+parseComment = Parse.choice
+  [ parseLineComment
+  , parseGeneralComment
+  ]
+
+parseLineComment :: Parse String
+parseLineComment =
+  Parse.string "//" *> Parse.manyTill Parse.get (Parse.char '\n')
+
+parseGeneralComment :: Parse String
+parseGeneralComment =
+  Parse.string "/*" *> Parse.manyTill Parse.get (Parse.string "*/")

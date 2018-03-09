@@ -60,6 +60,15 @@ main = runTests
   , Test "renderHexDigit"
     (Go.runRender Go.renderHexDigit (Go.HexDigit_0))
     "0"
+  , Test "parseComment"
+    (Go.runParse Go.parseComment "//\n")
+    (Just "")
+  , Test "parseLineComment"
+    (Go.runParse Go.parseLineComment "//\n")
+    (Just "")
+  , Test "parseGeneralComment"
+    (Go.runParse Go.parseGeneralComment "/**/")
+    (Just "")
   ]
 
 runTests :: [Test] -> IO ()
