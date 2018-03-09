@@ -11,6 +11,7 @@ module Glenda.Render
   , renderDecimalDigit
   , renderOctalDigit
   , renderHexDigit
+  , renderIdentifier
   ) where
 
 import qualified Glenda.Language as Go
@@ -88,3 +89,10 @@ renderHexDigit x = case x of
   Go.HexDigit_e -> mappend "e"
   Go.HexDigit_F -> mappend "F"
   Go.HexDigit_f -> mappend "f"
+
+renderIdentifier :: Render Go.Identifier
+renderIdentifier (Go.Identifier x y) =
+  renderLetter x . renderList (either renderLetter renderUnicodeDigit) y
+
+renderList :: Render element -> Render [element]
+renderList f xs = foldr (\ x g -> f x . g) id xs

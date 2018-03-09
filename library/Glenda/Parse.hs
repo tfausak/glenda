@@ -15,6 +15,7 @@ module Glenda.Parse
   , parseLineComment
   , parseGeneralComment
   , parseWhiteSpace
+  , parseIdentifier
   ) where
 
 import Data.Functor ((<$))
@@ -131,3 +132,14 @@ parseWhiteSpace = Parse.many (Parse.choice
   , Parse.char '\n'
   , parseComment
   ])
+
+parseIdentifier :: Parse Go.Identifier
+parseIdentifier = Go.Identifier
+  <$> parseLetter
+  <*> Parse.many (parseEither parseLetter parseUnicodeDigit)
+
+parseEither :: Parse left -> Parse right -> Parse (Either left right)
+parseEither parseLeft parseRight = Parse.choice
+  [ Left <$> parseLeft
+  , Right <$> parseRight
+  ]

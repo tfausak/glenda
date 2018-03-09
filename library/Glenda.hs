@@ -183,6 +183,9 @@ module Glenda (
   -- > αβ
   --
   -- Some identifiers are <#Predeclared_identifiers predeclared>.
+  Language.Identifier(..),
+  Parse.parseIdentifier,
+  Render.renderIdentifier,
 
   -- ** #Keywords# Keywords
   -- | The following keywords are reserved and may not be used as identifiers.

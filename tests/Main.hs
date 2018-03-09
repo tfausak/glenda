@@ -72,6 +72,12 @@ main = runTests
   , Test "parseWhiteSpace"
     (Go.runParse Go.parseWhiteSpace "")
     (Just "")
+  , Test "parseIdentifier"
+    (Go.runParse Go.parseIdentifier "_")
+    (Just (Go.Identifier Go.Letter_Underscore []))
+  , Test "renderIdentifier"
+    (Go.runRender Go.renderIdentifier (Go.Identifier Go.Letter_Underscore []))
+    "_"
   ]
 
 runTests :: [Test] -> IO ()

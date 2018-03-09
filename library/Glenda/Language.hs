@@ -9,6 +9,7 @@ module Glenda.Language
   , DecimalDigit(..)
   , OctalDigit(..)
   , HexDigit(..)
+  , Identifier(..)
   ) where
 
 data Newline
@@ -79,4 +80,8 @@ data HexDigit
   | HexDigit_e
   | HexDigit_F
   | HexDigit_f
+  deriving (Eq, Show)
+
+data Identifier
+  = Identifier Letter [Either Letter UnicodeDigit]
   deriving (Eq, Show)
