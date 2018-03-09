@@ -22,6 +22,14 @@ module Glenda.Language
   , E(..)
   , Sign(..)
   , ImaginaryLit(..)
+  , RuneLit(..)
+  , UnicodeValue(..)
+  , ByteValue(..)
+  , OctalByteValue(..)
+  , HexByteValue(..)
+  , LittleUValue(..)
+  , BigUValue(..)
+  , EscapedChar(..)
   ) where
 
 data Newline
@@ -160,4 +168,50 @@ data Sign
 data ImaginaryLit
   = ImaginaryLit_Decimals Decimals
   | ImaginaryLit_FloatLit FloatLit
+  deriving (Eq, Show)
+
+data RuneLit
+  = RuneLit_UnicodeValue UnicodeValue
+  | RuneLit_ByteValue ByteValue
+  deriving (Eq, Show)
+
+data UnicodeValue
+  = UnicodeValue_UnicodeChar UnicodeChar
+  | UnicodeValue_LittleUValue LittleUValue
+  | UnicodeValue_BigUValue BigUValue
+  | UnicodeValue_EscapedChar EscapedChar
+  deriving (Eq, Show)
+
+data ByteValue
+  = ByteValue_OctalByteValue OctalByteValue
+  | ByteValue_HexByteValue HexByteValue
+  deriving (Eq, Show)
+
+data OctalByteValue
+  = OctalByteValue OctalDigit OctalDigit OctalDigit
+  deriving (Eq, Show)
+
+data HexByteValue
+  = HexByteValue HexDigit HexDigit
+  deriving (Eq, Show)
+
+data LittleUValue
+  = LittleUValue HexDigit HexDigit HexDigit HexDigit
+  deriving (Eq, Show)
+
+data BigUValue
+  = BigUValue HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit
+  deriving (Eq, Show)
+
+data EscapedChar
+  = EscapedChar_Bell
+  | EscapedChar_Backspace
+  | EscapedChar_FormFeed
+  | EscapedChar_LineFeed
+  | EscapedChar_CarriageReturn
+  | EscapedChar_HorizontalTab
+  | EscapedChar_VerticalTab
+  | EscapedChar_Backslash
+  | EscapedChar_SingleQuote
+  | EscapedChar_DoubleQuote
   deriving (Eq, Show)

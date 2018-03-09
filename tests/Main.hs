@@ -54,7 +54,7 @@ main = runTests
   , Test "renderOctalDigit"
     (Go.runRender Go.renderOctalDigit (Go.OctalDigit_0))
     "0"
-  , Test "parseOctalDigit"
+  , Test "parseHexDigit"
     (Go.runParse Go.parseHexDigit "0")
     (Just Go.HexDigit_0)
   , Test "renderHexDigit"
@@ -150,6 +150,54 @@ main = runTests
   , Test "renderImaginaryLit"
     (Go.runRender Go.renderImaginaryLit (Go.ImaginaryLit_Decimals (Go.Decimals Go.DecimalDigit_0 [])))
     "0i"
+  , Test "parseRuneLit"
+    (Go.runParse Go.parseRuneLit "'a'")
+    (Just (Go.RuneLit_UnicodeValue (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'a'))))
+  , Test "renderRuneLit"
+    (Go.runRender Go.renderRuneLit (Go.RuneLit_UnicodeValue (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'a'))))
+    "'a'"
+  , Test "parseUnicodeValue"
+    (Go.runParse Go.parseUnicodeValue "a")
+    (Just (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'a')))
+  , Test "renderUnicodeValue"
+    (Go.runRender Go.renderUnicodeValue (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'a')))
+    "a"
+  , Test "parseByteValue"
+    (Go.runParse Go.parseByteValue "\\123")
+    (Just (Go.ByteValue_OctalByteValue (Go.OctalByteValue Go.OctalDigit_1 Go.OctalDigit_2 Go.OctalDigit_3)))
+  , Test "renderByteValue"
+    (Go.runRender Go.renderByteValue (Go.ByteValue_OctalByteValue (Go.OctalByteValue Go.OctalDigit_1 Go.OctalDigit_2 Go.OctalDigit_3)))
+    "\\123"
+  , Test "parseOctalByteValue"
+    (Go.runParse Go.parseOctalByteValue "\\123")
+    (Just (Go.OctalByteValue Go.OctalDigit_1 Go.OctalDigit_2 Go.OctalDigit_3))
+  , Test "renderOctalByteValue"
+    (Go.runRender Go.renderOctalByteValue (Go.OctalByteValue Go.OctalDigit_1 Go.OctalDigit_2 Go.OctalDigit_3))
+    "\\123"
+  , Test "parseHexByteValue"
+    (Go.runParse Go.parseHexByteValue "\\x12")
+    (Just (Go.HexByteValue Go.HexDigit_1 Go.HexDigit_2))
+  , Test "renderHexByteValue"
+    (Go.runRender Go.renderHexByteValue (Go.HexByteValue Go.HexDigit_1 Go.HexDigit_2))
+    "\\x12"
+  , Test "parseLittleUValue"
+    (Go.runParse Go.parseLittleUValue "\\u1234")
+    (Just (Go.LittleUValue Go.HexDigit_1 Go.HexDigit_2 Go.HexDigit_3 Go.HexDigit_4))
+  , Test "renderLittleUValue"
+    (Go.runRender Go.renderLittleUValue (Go.LittleUValue Go.HexDigit_1 Go.HexDigit_2 Go.HexDigit_3 Go.HexDigit_4))
+    "\\u1234"
+  , Test "parseBigUValue"
+    (Go.runParse Go.parseBigUValue "\\U12345678")
+    (Just (Go.BigUValue Go.HexDigit_1 Go.HexDigit_2 Go.HexDigit_3 Go.HexDigit_4 Go.HexDigit_5 Go.HexDigit_6 Go.HexDigit_7 Go.HexDigit_8))
+  , Test "renderBigUValue"
+    (Go.runRender Go.renderBigUValue (Go.BigUValue Go.HexDigit_1 Go.HexDigit_2 Go.HexDigit_3 Go.HexDigit_4 Go.HexDigit_5 Go.HexDigit_6 Go.HexDigit_7 Go.HexDigit_8))
+    "\\U12345678"
+  , Test "parseEscapedChar"
+    (Go.runParse Go.parseEscapedChar "\\a")
+    (Just Go.EscapedChar_Bell)
+  , Test "renderEscapedChar"
+    (Go.runRender Go.renderEscapedChar Go.EscapedChar_Bell)
+    "\\a"
   ]
 
 runTests :: [Test] -> IO ()

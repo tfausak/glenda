@@ -28,6 +28,14 @@ module Glenda.Parse
   , parseE
   , parseSign
   , parseImaginaryLit
+  , parseRuneLit
+  , parseUnicodeValue
+  , parseByteValue
+  , parseOctalByteValue
+  , parseHexByteValue
+  , parseLittleUValue
+  , parseBigUValue
+  , parseEscapedChar
   ) where
 
 import Data.Functor ((<$))
@@ -236,4 +244,67 @@ parseImaginaryLit :: Parse Go.ImaginaryLit
 parseImaginaryLit = Parse.choice
   [ Go.ImaginaryLit_Decimals <$> (parseDecimals <* Parse.char 'i')
   , Go.ImaginaryLit_FloatLit <$> (parseFloatLit <* Parse.char 'i')
+  ]
+
+parseRuneLit :: Parse Go.RuneLit
+parseRuneLit = Parse.between (Parse.char '\'') (Parse.char '\'') (Parse.choice
+  [ Go.RuneLit_UnicodeValue <$> parseUnicodeValue
+  , Go.RuneLit_ByteValue <$> parseByteValue
+  ])
+
+parseUnicodeValue :: Parse Go.UnicodeValue
+parseUnicodeValue = Parse.choice
+  [ Go.UnicodeValue_UnicodeChar <$> parseUnicodeChar
+  , Go.UnicodeValue_LittleUValue <$> parseLittleUValue
+  , Go.UnicodeValue_BigUValue <$> parseBigUValue
+  , Go.UnicodeValue_EscapedChar <$> parseEscapedChar
+  ]
+
+parseByteValue :: Parse Go.ByteValue
+parseByteValue = Parse.choice
+  [ Go.ByteValue_OctalByteValue <$> parseOctalByteValue
+  , Go.ByteValue_HexByteValue <$> parseHexByteValue
+  ]
+
+parseOctalByteValue :: Parse Go.OctalByteValue
+parseOctalByteValue = Parse.char '\\' *> (Go.OctalByteValue
+  <$> parseOctalDigit
+  <*> parseOctalDigit
+  <*> parseOctalDigit)
+
+parseHexByteValue :: Parse Go.HexByteValue
+parseHexByteValue = Parse.string "\\x" *> (Go.HexByteValue
+  <$> parseHexDigit
+  <*> parseHexDigit)
+
+parseLittleUValue :: Parse Go.LittleUValue
+parseLittleUValue = Parse.string "\\u" *> (Go.LittleUValue
+  <$> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit)
+
+parseBigUValue :: Parse Go.BigUValue
+parseBigUValue = Parse.string "\\U" *> (Go.BigUValue
+  <$> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit
+  <*> parseHexDigit)
+
+parseEscapedChar :: Parse Go.EscapedChar
+parseEscapedChar = Parse.choice
+  [ Go.EscapedChar_Bell <$ Parse.string "\\a"
+  , Go.EscapedChar_Backspace <$ Parse.string "\\b"
+  , Go.EscapedChar_FormFeed <$ Parse.string "\\f"
+  , Go.EscapedChar_LineFeed <$ Parse.string "\\n"
+  , Go.EscapedChar_CarriageReturn <$ Parse.string "\\r"
+  , Go.EscapedChar_HorizontalTab <$ Parse.string "\\t"
+  , Go.EscapedChar_VerticalTab <$ Parse.string "\\v"
+  , Go.EscapedChar_Backslash <$ Parse.string "\\\\"
+  , Go.EscapedChar_SingleQuote <$ Parse.string "\\'"
+  , Go.EscapedChar_DoubleQuote <$ Parse.string "\\\""
   ]

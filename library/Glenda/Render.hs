@@ -24,6 +24,14 @@ module Glenda.Render
   , renderE
   , renderSign
   , renderImaginaryLit
+  , renderRuneLit
+  , renderUnicodeValue
+  , renderByteValue
+  , renderOctalByteValue
+  , renderHexByteValue
+  , renderLittleUValue
+  , renderBigUValue
+  , renderEscapedChar
   ) where
 
 import qualified Glenda.Language as Go
@@ -179,3 +187,62 @@ renderImaginaryLit :: Render Go.ImaginaryLit
 renderImaginaryLit x = case x of
   Go.ImaginaryLit_Decimals y -> renderDecimals y . mappend "i"
   Go.ImaginaryLit_FloatLit y -> renderFloatLit y . mappend "i"
+
+renderRuneLit :: Render Go.RuneLit
+renderRuneLit x = case x of
+  Go.RuneLit_UnicodeValue y -> mappend "'" . renderUnicodeValue y . mappend "'"
+  Go.RuneLit_ByteValue y -> mappend "'" . renderByteValue y . mappend "'"
+
+renderUnicodeValue :: Render Go.UnicodeValue
+renderUnicodeValue x = case x of
+  Go.UnicodeValue_UnicodeChar y -> renderUnicodeChar y
+  Go.UnicodeValue_LittleUValue y -> renderLittleUValue y
+  Go.UnicodeValue_BigUValue y -> renderBigUValue y
+  Go.UnicodeValue_EscapedChar y -> renderEscapedChar y
+
+renderByteValue :: Render Go.ByteValue
+renderByteValue x = case x of
+  Go.ByteValue_OctalByteValue y -> renderOctalByteValue y
+  Go.ByteValue_HexByteValue y -> renderHexByteValue y
+
+renderOctalByteValue :: Render Go.OctalByteValue
+renderOctalByteValue (Go.OctalByteValue a b c) = mappend "\\"
+  . renderOctalDigit a
+  . renderOctalDigit b
+  . renderOctalDigit c
+
+renderHexByteValue :: Render Go.HexByteValue
+renderHexByteValue (Go.HexByteValue a b) = mappend "\\x"
+  . renderHexDigit a
+  . renderHexDigit b
+
+renderLittleUValue :: Render Go.LittleUValue
+renderLittleUValue (Go.LittleUValue a b c d) = mappend "\\u"
+  . renderHexDigit a
+  . renderHexDigit b
+  . renderHexDigit c
+  . renderHexDigit d
+
+renderBigUValue :: Render Go.BigUValue
+renderBigUValue (Go.BigUValue a b c d e f g h) = mappend "\\U"
+  . renderHexDigit a
+  . renderHexDigit b
+  . renderHexDigit c
+  . renderHexDigit d
+  . renderHexDigit e
+  . renderHexDigit f
+  . renderHexDigit g
+  . renderHexDigit h
+
+renderEscapedChar :: Render Go.EscapedChar
+renderEscapedChar x = case x of
+  Go.EscapedChar_Bell -> mappend "\\a"
+  Go.EscapedChar_Backspace -> mappend "\\b"
+  Go.EscapedChar_FormFeed -> mappend "\\f"
+  Go.EscapedChar_LineFeed -> mappend "\\n"
+  Go.EscapedChar_CarriageReturn -> mappend "\\r"
+  Go.EscapedChar_HorizontalTab -> mappend "\\t"
+  Go.EscapedChar_VerticalTab -> mappend "\\v"
+  Go.EscapedChar_Backslash -> mappend "\\\\"
+  Go.EscapedChar_SingleQuote -> mappend "\\'"
+  Go.EscapedChar_DoubleQuote -> mappend "\\\""

@@ -377,6 +377,30 @@ module Glenda (
   -- > '\0'         // illegal: too few octal digits
   -- > '\uDFFF'     // illegal: surrogate half
   -- > '\U00110000' // illegal: invalid Unicode code point
+  Language.RuneLit(..),
+  Parse.parseRuneLit,
+  Render.renderRuneLit,
+  Language.UnicodeValue(..),
+  Parse.parseUnicodeValue,
+  Render.renderUnicodeValue,
+  Language.ByteValue(..),
+  Parse.parseByteValue,
+  Render.renderByteValue,
+  Language.OctalByteValue(..),
+  Parse.parseOctalByteValue,
+  Render.renderOctalByteValue,
+  Language.HexByteValue(..),
+  Parse.parseHexByteValue,
+  Render.renderHexByteValue,
+  Language.LittleUValue(..),
+  Parse.parseLittleUValue,
+  Render.renderLittleUValue,
+  Language.BigUValue(..),
+  Parse.parseBigUValue,
+  Render.renderBigUValue,
+  Language.EscapedChar(..),
+  Parse.parseEscapedChar,
+  Render.renderEscapedChar,
 
   -- ** #String_literals# String literals
   -- | A string literal represents a <#Constants string constant> obtained from
