@@ -30,6 +30,9 @@ module Glenda.Language
   , LittleUValue(..)
   , BigUValue(..)
   , EscapedChar(..)
+  , StringLit(..)
+  , RawStringLit(..)
+  , InterpretedStringLit(..)
   ) where
 
 data Newline
@@ -214,4 +217,17 @@ data EscapedChar
   | EscapedChar_Backslash
   | EscapedChar_SingleQuote
   | EscapedChar_DoubleQuote
+  deriving (Eq, Show)
+
+data StringLit
+  = StringLit_RawStringLit RawStringLit
+  | StringLit_InterpretedStringLit InterpretedStringLit
+  deriving (Eq, Show)
+
+newtype RawStringLit
+  = RawStringLit [Either UnicodeChar Newline]
+  deriving (Eq, Show)
+
+newtype InterpretedStringLit
+  = InterpretedStringLit [Either UnicodeValue ByteValue]
   deriving (Eq, Show)

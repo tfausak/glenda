@@ -36,6 +36,9 @@ module Glenda.Parse
   , parseLittleUValue
   , parseBigUValue
   , parseEscapedChar
+  , parseStringLit
+  , parseRawStringLit
+  , parseInterpretedStringLit
   ) where
 
 import Data.Functor ((<$))
@@ -308,3 +311,21 @@ parseEscapedChar = Parse.choice
   , Go.EscapedChar_SingleQuote <$ Parse.string "\\'"
   , Go.EscapedChar_DoubleQuote <$ Parse.string "\\\""
   ]
+
+parseStringLit :: Parse Go.StringLit
+parseStringLit = Parse.choice
+  [ Go.StringLit_RawStringLit <$> parseRawStringLit
+  , Go.StringLit_InterpretedStringLit <$> parseInterpretedStringLit
+  ]
+
+parseRawStringLit :: Parse Go.RawStringLit
+parseRawStringLit = Parse.char '`' *> (Go.RawStringLit
+  <$> Parse.manyTill
+    (parseEither parseUnicodeChar parseNewline)
+    (Parse.char '`'))
+
+parseInterpretedStringLit :: Parse Go.InterpretedStringLit
+parseInterpretedStringLit = Parse.char '"' *> (Go.InterpretedStringLit
+  <$> Parse.manyTill
+    (parseEither parseUnicodeValue parseByteValue)
+    (Parse.char '"'))

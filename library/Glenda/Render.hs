@@ -32,6 +32,9 @@ module Glenda.Render
   , renderLittleUValue
   , renderBigUValue
   , renderEscapedChar
+  , renderStringLit
+  , renderRawStringLit
+  , renderInterpretedStringLit
   ) where
 
 import qualified Glenda.Language as Go
@@ -246,3 +249,20 @@ renderEscapedChar x = case x of
   Go.EscapedChar_Backslash -> mappend "\\\\"
   Go.EscapedChar_SingleQuote -> mappend "\\'"
   Go.EscapedChar_DoubleQuote -> mappend "\\\""
+
+renderStringLit :: Render Go.StringLit
+renderStringLit x = case x of
+  Go.StringLit_RawStringLit y -> renderRawStringLit y
+  Go.StringLit_InterpretedStringLit y -> renderInterpretedStringLit y
+
+renderRawStringLit :: Render Go.RawStringLit
+renderRawStringLit (Go.RawStringLit x) =
+  mappend "`"
+  . renderList (either renderUnicodeChar renderNewline) x
+  . mappend "`"
+
+renderInterpretedStringLit :: Render Go.InterpretedStringLit
+renderInterpretedStringLit (Go.InterpretedStringLit x) =
+  mappend "\""
+  . renderList (either renderUnicodeValue renderByteValue) x
+  . mappend "\""

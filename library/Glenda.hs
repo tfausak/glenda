@@ -457,6 +457,15 @@ module Glenda (
   -- combining form involving an accent and a letter, the result will be an
   -- error if placed in a rune literal (it is not a single code point), and
   -- will appear as two code points if placed in a string literal.
+  Language.StringLit(..),
+  Parse.parseStringLit,
+  Render.renderStringLit,
+  Language.RawStringLit(..),
+  Parse.parseRawStringLit,
+  Render.renderRawStringLit,
+  Language.InterpretedStringLit(..),
+  Parse.parseInterpretedStringLit,
+  Render.renderInterpretedStringLit,
 
   -- * #Constants# Constants
   -- | There are /boolean constants/, /rune constants/, /integer constants/,

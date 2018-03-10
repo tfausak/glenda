@@ -198,6 +198,24 @@ main = runTests
   , Test "renderEscapedChar"
     (Go.runRender Go.renderEscapedChar Go.EscapedChar_Bell)
     "\\a"
+  , Test "parseStringLit"
+    (Go.runParse Go.parseStringLit "``")
+    (Just (Go.StringLit_RawStringLit (Go.RawStringLit [])))
+  , Test "renderStringLit"
+    (Go.runRender Go.renderStringLit (Go.StringLit_RawStringLit (Go.RawStringLit [])))
+    "``"
+  , Test "parseRawStringLit"
+    (Go.runParse Go.parseRawStringLit "``")
+    (Just (Go.RawStringLit []))
+  , Test "renderRawStringLit"
+    (Go.runRender Go.renderRawStringLit (Go.RawStringLit []))
+    "``"
+  , Test "parseInterpretedStringLit"
+    (Go.runParse Go.parseInterpretedStringLit "\"\"")
+    (Just (Go.InterpretedStringLit []))
+  , Test "renderInterpretedStringLit"
+    (Go.runRender Go.renderInterpretedStringLit (Go.InterpretedStringLit []))
+    "\"\""
   ]
 
 runTests :: [Test] -> IO ()
