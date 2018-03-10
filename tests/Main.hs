@@ -217,7 +217,7 @@ main = runTests
     (Go.runRender Go.renderInterpretedStringLit (Go.InterpretedStringLit []))
     "\"\""
   , Test "parsePackageClause"
-    (Go.runParse Go.parsePackageClause "packagep")
+    (Go.runParse Go.parsePackageClause "package p")
     (Just (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))
   , Test "renderPackageClause"
     (Go.runRender Go.renderPackageClause (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))

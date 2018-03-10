@@ -158,10 +158,13 @@ parseWhiteSpace = Parse.many (Parse.choice
   , parseComment
   ])
 
+parseToken :: Parse a -> Parse a
+parseToken parse = parse <* parseWhiteSpace
+
 parseIdentifier :: Parse Go.Identifier
-parseIdentifier = Go.Identifier
+parseIdentifier = parseToken (Go.Identifier
   <$> parseLetter
-  <*> Parse.many (parseEither parseLetter parseUnicodeDigit)
+  <*> Parse.many (parseEither parseLetter parseUnicodeDigit))
 
 parseEither :: Parse left -> Parse right -> Parse (Either left right)
 parseEither parseLeft parseRight = Parse.choice
@@ -170,11 +173,11 @@ parseEither parseLeft parseRight = Parse.choice
   ]
 
 parseIntLit :: Parse Go.IntLit
-parseIntLit = Parse.choice
+parseIntLit = parseToken (Parse.choice
   [ Go.IntLit_DecimalLit <$> parseDecimalLit
   , Go.IntLit_OctalLit <$> parseOctalLit
   , Go.IntLit_HexLit <$> parseHexLit
-  ]
+  ])
 
 parseDecimalLit :: Parse Go.DecimalLit
 parseDecimalLit = Go.DecimalLit
@@ -210,14 +213,14 @@ parseX = Parse.choice
   ]
 
 parseFloatLit :: Parse Go.FloatLit
-parseFloatLit = Parse.choice
+parseFloatLit = parseToken (Parse.choice
   [ Go.FloatLit_Trailing
     <$> (parseDecimals <* Parse.char '.')
     <*> parseMaybe parseDecimals
     <*> parseMaybe parseExponent
   , Go.FloatLit_Exponent <$> parseDecimals <*> parseExponent
   , Go.FloatLit_Leading <$> parseDecimals <*> parseMaybe parseExponent
-  ]
+  ])
 
 parseMaybe :: Parse a -> Parse (Maybe a)
 parseMaybe parse = Parse.option Nothing (Just <$> parse)
@@ -246,16 +249,17 @@ parseSign = Parse.choice
   ]
 
 parseImaginaryLit :: Parse Go.ImaginaryLit
-parseImaginaryLit = Parse.choice
+parseImaginaryLit = parseToken (Parse.choice
   [ Go.ImaginaryLit_Decimals <$> (parseDecimals <* Parse.char 'i')
   , Go.ImaginaryLit_FloatLit <$> (parseFloatLit <* Parse.char 'i')
-  ]
+  ])
 
 parseRuneLit :: Parse Go.RuneLit
-parseRuneLit = Parse.between (Parse.char '\'') (Parse.char '\'') (Parse.choice
-  [ Go.RuneLit_UnicodeValue <$> parseUnicodeValue
-  , Go.RuneLit_ByteValue <$> parseByteValue
-  ])
+parseRuneLit = parseToken
+  (Parse.between (Parse.char '\'') (Parse.char '\'') (Parse.choice
+    [ Go.RuneLit_UnicodeValue <$> parseUnicodeValue
+    , Go.RuneLit_ByteValue <$> parseByteValue
+    ]))
 
 parseUnicodeValue :: Parse Go.UnicodeValue
 parseUnicodeValue = Parse.choice
@@ -315,10 +319,10 @@ parseEscapedChar = Parse.choice
   ]
 
 parseStringLit :: Parse Go.StringLit
-parseStringLit = Parse.choice
+parseStringLit = parseToken (Parse.choice
   [ Go.StringLit_RawStringLit <$> parseRawStringLit
   , Go.StringLit_InterpretedStringLit <$> parseInterpretedStringLit
-  ]
+  ])
 
 parseRawStringLit :: Parse Go.RawStringLit
 parseRawStringLit = Parse.char '`' *> (Go.RawStringLit
@@ -333,8 +337,8 @@ parseInterpretedStringLit = Parse.char '"' *> (Go.InterpretedStringLit
     (Parse.char '"'))
 
 parsePackageClause :: Parse Go.PackageClause
-parsePackageClause = Go.PackageClause
-  <$> (Parse.string "package" *> parsePackageName)
+parsePackageClause = parseToken (Parse.string "package")
+  *> (Go.PackageClause <$> parsePackageName)
 
 parsePackageName :: Parse Go.PackageName
 parsePackageName = Go.PackageName <$> parseIdentifier
