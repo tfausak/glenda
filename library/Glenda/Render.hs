@@ -35,6 +35,7 @@ module Glenda.Render
   , renderStringLit
   , renderRawStringLit
   , renderInterpretedStringLit
+  , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
   ) where
@@ -268,6 +269,12 @@ renderInterpretedStringLit (Go.InterpretedStringLit x) =
   mappend "\""
   . renderList (either renderUnicodeValue renderByteValue) x
   . mappend "\""
+
+renderQualifiedIdent :: Render Go.QualifiedIdent
+renderQualifiedIdent (Go.QualifiedIdent x y) =
+  renderPackageName x
+  . mappend "."
+  . renderIdentifier y
 
 renderPackageClause :: Render Go.PackageClause
 renderPackageClause (Go.PackageClause x) =

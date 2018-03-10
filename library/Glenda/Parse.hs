@@ -39,6 +39,7 @@ module Glenda.Parse
   , parseStringLit
   , parseRawStringLit
   , parseInterpretedStringLit
+  , parseQualifiedIdent
   , parsePackageClause
   , parsePackageName
   ) where
@@ -335,6 +336,11 @@ parseInterpretedStringLit = Parse.char '"' *> (Go.InterpretedStringLit
   <$> Parse.manyTill
     (parseEither parseUnicodeValue parseByteValue)
     (Parse.char '"'))
+
+parseQualifiedIdent :: Parse Go.QualifiedIdent
+parseQualifiedIdent = Go.QualifiedIdent
+  <$> (parsePackageName <* Parse.char '.')
+  <*> parseIdentifier
 
 parsePackageClause :: Parse Go.PackageClause
 parsePackageClause = parseToken (Parse.string "package")

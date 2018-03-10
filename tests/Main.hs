@@ -216,6 +216,12 @@ main = runTests
   , Test "renderInterpretedStringLit"
     (Go.runRender Go.renderInterpretedStringLit (Go.InterpretedStringLit []))
     "\"\""
+  , Test "parseQualifiedIdent"
+    (Go.runParse Go.parseQualifiedIdent "p._")
+    (Just (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))
+  , Test "renderQualifiedIdent"
+    (Go.runRender Go.renderQualifiedIdent (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))
+    "p._"
   , Test "parsePackageClause"
     (Go.runParse Go.parsePackageClause "package p")
     (Just (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))

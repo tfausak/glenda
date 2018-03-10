@@ -1704,6 +1704,9 @@ module Glenda (
   -- <#Blocks package block> of that package.
   --
   -- > math.Sin    // denotes the Sin function in package math
+  Language.QualifiedIdent(..),
+  Parse.parseQualifiedIdent,
+  Render.renderQualifiedIdent,
 
   -- ** #Composite_literals# Composite literals
   -- | Composite literals construct values for structs, arrays, slices, and

@@ -33,6 +33,7 @@ module Glenda.Language
   , StringLit(..)
   , RawStringLit(..)
   , InterpretedStringLit(..)
+  , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
   ) where
@@ -232,6 +233,10 @@ newtype RawStringLit
 
 newtype InterpretedStringLit
   = InterpretedStringLit [Either UnicodeValue ByteValue]
+  deriving (Eq, Show)
+
+data QualifiedIdent
+  = QualifiedIdent PackageName Identifier
   deriving (Eq, Show)
 
 newtype PackageClause
