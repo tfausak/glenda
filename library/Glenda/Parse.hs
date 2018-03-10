@@ -42,6 +42,9 @@ module Glenda.Parse
   , parseQualifiedIdent
   , parsePackageClause
   , parsePackageName
+  , parseImportDecl
+  , parseImportSpec
+  , parseImportPath
   ) where
 
 import Data.Functor ((<$))
@@ -348,3 +351,26 @@ parsePackageClause = parseToken (Parse.string "package")
 
 parsePackageName :: Parse Go.PackageName
 parsePackageName = Go.PackageName <$> parseIdentifier
+
+parseImportDecl :: Parse Go.ImportDecl
+parseImportDecl = Parse.choice
+  [ Go.ImportDecl_One
+    <$> (parseToken (Parse.string "import") *> parseImportSpec)
+  , Go.ImportDecl_Many <$>
+    ( parseToken (Parse.string "import")
+    *> parseToken (Parse.char '(')
+    *> Parse.endBy parseImportSpec (parseToken (Parse.char ';'))
+    <* parseToken (Parse.char ')')
+    )
+  ]
+
+parseImportSpec :: Parse Go.ImportSpec
+parseImportSpec = Parse.choice
+  [ Go.ImportSpec_Unqualified
+    <$> (parseToken (Parse.char '.') *> parseImportPath)
+  , Go.ImportSpec_Explicit <$> parsePackageName <*> parseImportPath
+  , Go.ImportSpec_Implicit <$> parseImportPath
+  ]
+
+parseImportPath :: Parse Go.ImportPath
+parseImportPath = Go.ImportPath <$> parseStringLit

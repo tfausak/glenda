@@ -38,6 +38,9 @@ module Glenda.Render
   , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
+  , renderImportDecl
+  , renderImportSpec
+  , renderImportPath
   ) where
 
 import qualified Glenda.Language as Go
@@ -282,3 +285,21 @@ renderPackageClause (Go.PackageClause x) =
 
 renderPackageName :: Render Go.PackageName
 renderPackageName (Go.PackageName x) = renderIdentifier x
+
+renderImportDecl :: Render Go.ImportDecl
+renderImportDecl x = case x of
+  Go.ImportDecl_One y -> mappend "import " . renderImportSpec y
+  Go.ImportDecl_Many y ->
+    mappend "import ("
+    . renderList (\ z -> renderImportSpec z . mappend ";") y
+    . mappend ")"
+
+renderImportSpec :: Render Go.ImportSpec
+renderImportSpec x = case x of
+  Go.ImportSpec_Unqualified y -> mappend ". " . renderImportPath y
+  Go.ImportSpec_Explicit y z ->
+    renderPackageName y . mappend " " . renderImportPath z
+  Go.ImportSpec_Implicit y -> renderImportPath y
+
+renderImportPath :: Render Go.ImportPath
+renderImportPath (Go.ImportPath x) = renderStringLit x

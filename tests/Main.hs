@@ -234,6 +234,24 @@ main = runTests
   , Test "renderPackageName"
     (Go.runRender Go.renderPackageName (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])))
     "p"
+  , Test "parseImportDecl"
+    (Go.runParse Go.parseImportDecl "import \"p\"")
+    (Just (Go.ImportDecl_One (Go.ImportSpec_Implicit (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))]))))))
+  , Test "renderImportDecl"
+    (Go.runRender Go.renderImportDecl (Go.ImportDecl_One (Go.ImportSpec_Implicit (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))]))))))
+    "import \"p\""
+  , Test "parseImportSpec"
+    (Go.runParse Go.parseImportSpec "\"p\"")
+    (Just (Go.ImportSpec_Implicit (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))])))))
+  , Test "renderImportSpec"
+    (Go.runRender Go.renderImportSpec (Go.ImportSpec_Implicit (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))])))))
+    "\"p\""
+  , Test "parseImportPath"
+    (Go.runParse Go.parseImportPath "\"p\"")
+    (Just (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))]))))
+  , Test "renderImportPath"
+    (Go.runRender Go.renderImportPath (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))]))))
+    "\"p\""
   ]
 
 runTests :: [Test] -> IO ()

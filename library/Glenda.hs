@@ -4276,6 +4276,15 @@ module Glenda (
   -- identifier as explicit package name:
   --
   -- > import _ "lib/math"
+  Language.ImportDecl(..),
+  Parse.parseImportDecl,
+  Render.renderImportDecl,
+  Language.ImportSpec(..),
+  Parse.parseImportSpec,
+  Render.renderImportSpec,
+  Language.ImportPath(..),
+  Parse.parseImportPath,
+  Render.renderImportPath,
 
   -- ** #An_example_package# An example package
   -- | Here is a complete Go package that implements a concurrent prime sieve.

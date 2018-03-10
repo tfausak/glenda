@@ -36,6 +36,9 @@ module Glenda.Language
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
+  , ImportDecl(..)
+  , ImportSpec(..)
+  , ImportPath(..)
   ) where
 
 data Newline
@@ -245,4 +248,19 @@ newtype PackageClause
 
 newtype PackageName
   = PackageName Identifier
+  deriving (Eq, Show)
+
+data ImportDecl
+  = ImportDecl_One ImportSpec
+  | ImportDecl_Many [ImportSpec]
+  deriving (Eq, Show)
+
+data ImportSpec
+  = ImportSpec_Unqualified ImportPath
+  | ImportSpec_Explicit PackageName ImportPath
+  | ImportSpec_Implicit ImportPath
+  deriving (Eq, Show)
+
+newtype ImportPath
+  = ImportPath StringLit
   deriving (Eq, Show)
