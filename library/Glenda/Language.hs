@@ -36,6 +36,7 @@ module Glenda.Language
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
+  , FallthroughStmt(..)
   , ImportDecl(..)
   , ImportSpec(..)
   , ImportPath(..)
@@ -248,6 +249,10 @@ newtype PackageClause
 
 newtype PackageName
   = PackageName Identifier
+  deriving (Eq, Show)
+
+data FallthroughStmt
+  = FallthroughStmt
   deriving (Eq, Show)
 
 data ImportDecl

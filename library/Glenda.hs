@@ -3846,6 +3846,9 @@ module Glenda (
   -- only as the final non-empty statement in such a clause.
   --
   -- > FallthroughStmt = "fallthrough" .
+  Language.FallthroughStmt(..),
+  Parse.parseFallthroughStmt,
+  Render.renderFallthroughStmt,
 
   -- ** #Defer_statements# Defer statements
   -- | A \"defer\" statement invokes a function whose execution is deferred to

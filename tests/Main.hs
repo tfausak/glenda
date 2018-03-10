@@ -234,6 +234,12 @@ main = runTests
   , Test "renderPackageName"
     (Go.runRender Go.renderPackageName (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])))
     "p"
+  , Test "parseFallthroughStmt"
+    (Go.runParse Go.parseFallthroughStmt "fallthrough")
+    (Just Go.FallthroughStmt)
+  , Test "renderFallthroughStmt"
+    (Go.runRender Go.renderFallthroughStmt Go.FallthroughStmt)
+    "fallthrough"
   , Test "parseImportDecl"
     (Go.runParse Go.parseImportDecl "import \"p\"")
     (Just (Go.ImportDecl_One (Go.ImportSpec_Implicit (Go.ImportPath (Go.StringLit_InterpretedStringLit (Go.InterpretedStringLit [Left (Go.UnicodeValue_UnicodeChar (Go.UnicodeChar 'p'))]))))))
