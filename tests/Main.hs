@@ -234,6 +234,12 @@ main = runTests
   , Test "renderPackageName"
     (Go.runRender Go.renderPackageName (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])))
     "p"
+  , Test "parseEmptyStmt"
+    (Go.runParse Go.parseEmptyStmt "")
+    (Just Go.EmptyStmt)
+  , Test "renderEmptyStmt"
+    (Go.runRender Go.renderEmptyStmt Go.EmptyStmt)
+    ""
   , Test "parseFallthroughStmt"
     (Go.runParse Go.parseFallthroughStmt "fallthrough")
     (Just Go.FallthroughStmt)

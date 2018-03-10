@@ -38,6 +38,7 @@ module Glenda.Render
   , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
+  , renderEmptyStmt
   , renderFallthroughStmt
   , renderImportDecl
   , renderImportSpec
@@ -286,6 +287,9 @@ renderPackageClause (Go.PackageClause x) =
 
 renderPackageName :: Render Go.PackageName
 renderPackageName (Go.PackageName x) = renderIdentifier x
+
+renderEmptyStmt :: Render Go.EmptyStmt
+renderEmptyStmt Go.EmptyStmt = id
 
 renderFallthroughStmt :: Render Go.FallthroughStmt
 renderFallthroughStmt Go.FallthroughStmt = mappend "fallthrough"

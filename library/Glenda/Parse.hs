@@ -42,6 +42,7 @@ module Glenda.Parse
   , parseQualifiedIdent
   , parsePackageClause
   , parsePackageName
+  , parseEmptyStmt
   , parseFallthroughStmt
   , parseImportDecl
   , parseImportSpec
@@ -352,6 +353,9 @@ parsePackageClause = parseToken (Parse.string "package")
 
 parsePackageName :: Parse Go.PackageName
 parsePackageName = Go.PackageName <$> parseIdentifier
+
+parseEmptyStmt :: Parse Go.EmptyStmt
+parseEmptyStmt = Go.EmptyStmt <$ parseWhiteSpace
 
 parseFallthroughStmt :: Parse Go.FallthroughStmt
 parseFallthroughStmt =

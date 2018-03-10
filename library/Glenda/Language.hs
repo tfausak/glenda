@@ -36,6 +36,7 @@ module Glenda.Language
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
+  , EmptyStmt(..)
   , FallthroughStmt(..)
   , ImportDecl(..)
   , ImportSpec(..)
@@ -249,6 +250,10 @@ newtype PackageClause
 
 newtype PackageName
   = PackageName Identifier
+  deriving (Eq, Show)
+
+data EmptyStmt
+  = EmptyStmt
   deriving (Eq, Show)
 
 data FallthroughStmt

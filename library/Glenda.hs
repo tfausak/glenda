@@ -3103,6 +3103,9 @@ module Glenda (
   -- | The empty statement does nothing.
   --
   -- > EmptyStmt = .
+  Language.EmptyStmt(..),
+  Parse.parseEmptyStmt,
+  Render.renderEmptyStmt,
 
   -- ** #Labeled_statements# Labeled statements
   -- | A labeled statement may be the target of a @goto@, @break@ or @continue@
