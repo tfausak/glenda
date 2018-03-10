@@ -240,6 +240,12 @@ main = runTests
   , Test "renderEmptyStmt"
     (Go.runRender Go.renderEmptyStmt Go.EmptyStmt)
     ""
+  , Test "parseLabel"
+    (Go.runParse Go.parseLabel "x")
+    (Just (Go.Label (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'x')) [])))
+  , Test "renderLabel"
+    (Go.runRender Go.renderLabel (Go.Label (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'x')) [])))
+    "x"
   , Test "parseFallthroughStmt"
     (Go.runParse Go.parseFallthroughStmt "fallthrough")
     (Just Go.FallthroughStmt)

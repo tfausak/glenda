@@ -43,6 +43,7 @@ module Glenda.Parse
   , parsePackageClause
   , parsePackageName
   , parseEmptyStmt
+  , parseLabel
   , parseFallthroughStmt
   , parseImportDecl
   , parseImportSpec
@@ -356,6 +357,9 @@ parsePackageName = Go.PackageName <$> parseIdentifier
 
 parseEmptyStmt :: Parse Go.EmptyStmt
 parseEmptyStmt = Go.EmptyStmt <$ parseWhiteSpace
+
+parseLabel :: Parse Go.Label
+parseLabel = Go.Label <$> parseIdentifier
 
 parseFallthroughStmt :: Parse Go.FallthroughStmt
 parseFallthroughStmt =

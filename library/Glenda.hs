@@ -3115,6 +3115,9 @@ module Glenda (
   -- > Label       = identifier .
   --
   -- > Error: log.Panic("error encountered")
+  Language.Label(..),
+  Parse.parseLabel,
+  Render.renderLabel,
 
   -- ** #Expression_statements# Expression statements
   -- | With the exception of specific built-in functions, function and method

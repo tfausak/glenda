@@ -37,6 +37,7 @@ module Glenda.Language
   , PackageClause(..)
   , PackageName(..)
   , EmptyStmt(..)
+  , Label(..)
   , FallthroughStmt(..)
   , ImportDecl(..)
   , ImportSpec(..)
@@ -254,6 +255,10 @@ newtype PackageName
 
 data EmptyStmt
   = EmptyStmt
+  deriving (Eq, Show)
+
+newtype Label
+  = Label Identifier
   deriving (Eq, Show)
 
 data FallthroughStmt
