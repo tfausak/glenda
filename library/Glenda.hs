@@ -4212,6 +4212,12 @@ module Glenda (
   -- A set of files sharing the same PackageName form the implementation of a
   -- package. An implementation may require that all source files for a
   -- package inhabit the same directory.
+  Language.PackageClause(..),
+  Parse.parsePackageClause,
+  Render.renderPackageClause,
+  Language.PackageName(..),
+  Parse.parsePackageName,
+  Render.renderPackageName,
 
   -- ** #Import_declarations# Import declarations
   -- | An import declaration states that the source file containing the

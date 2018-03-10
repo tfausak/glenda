@@ -216,6 +216,18 @@ main = runTests
   , Test "renderInterpretedStringLit"
     (Go.runRender Go.renderInterpretedStringLit (Go.InterpretedStringLit []))
     "\"\""
+  , Test "parsePackageClause"
+    (Go.runParse Go.parsePackageClause "packagep")
+    (Just (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))
+  , Test "renderPackageClause"
+    (Go.runRender Go.renderPackageClause (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))
+    "package p"
+  , Test "parsePackageName"
+    (Go.runParse Go.parsePackageName "p")
+    (Just (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])))
+  , Test "renderPackageName"
+    (Go.runRender Go.renderPackageName (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])))
+    "p"
   ]
 
 runTests :: [Test] -> IO ()

@@ -39,6 +39,8 @@ module Glenda.Parse
   , parseStringLit
   , parseRawStringLit
   , parseInterpretedStringLit
+  , parsePackageClause
+  , parsePackageName
   ) where
 
 import Data.Functor ((<$))
@@ -329,3 +331,10 @@ parseInterpretedStringLit = Parse.char '"' *> (Go.InterpretedStringLit
   <$> Parse.manyTill
     (parseEither parseUnicodeValue parseByteValue)
     (Parse.char '"'))
+
+parsePackageClause :: Parse Go.PackageClause
+parsePackageClause = Go.PackageClause
+  <$> (Parse.string "package" *> parsePackageName)
+
+parsePackageName :: Parse Go.PackageName
+parsePackageName = Go.PackageName <$> parseIdentifier

@@ -35,6 +35,8 @@ module Glenda.Render
   , renderStringLit
   , renderRawStringLit
   , renderInterpretedStringLit
+  , renderPackageClause
+  , renderPackageName
   ) where
 
 import qualified Glenda.Language as Go
@@ -266,3 +268,10 @@ renderInterpretedStringLit (Go.InterpretedStringLit x) =
   mappend "\""
   . renderList (either renderUnicodeValue renderByteValue) x
   . mappend "\""
+
+renderPackageClause :: Render Go.PackageClause
+renderPackageClause (Go.PackageClause x) =
+  mappend "package " . renderPackageName x
+
+renderPackageName :: Render Go.PackageName
+renderPackageName (Go.PackageName x) = renderIdentifier x
