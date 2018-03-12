@@ -35,6 +35,7 @@ module Glenda.Render
   , renderStringLit
   , renderRawStringLit
   , renderInterpretedStringLit
+  , renderTypeName
   , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
@@ -275,6 +276,11 @@ renderInterpretedStringLit (Go.InterpretedStringLit x) =
   mappend "\""
   . renderList (either renderUnicodeValue renderByteValue) x
   . mappend "\""
+
+renderTypeName :: Render Go.TypeName
+renderTypeName x = case x of
+  Go.TypeName_Unqualified y -> renderIdentifier y
+  Go.TypeName_Qualified y -> renderQualifiedIdent y
 
 renderQualifiedIdent :: Render Go.QualifiedIdent
 renderQualifiedIdent (Go.QualifiedIdent x y) =

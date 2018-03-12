@@ -216,6 +216,12 @@ main = runTests
   , Test "renderInterpretedStringLit"
     (Go.runRender Go.renderInterpretedStringLit (Go.InterpretedStringLit []))
     "\"\""
+  , Test "parseTypeName"
+    (Go.runParse Go.parseTypeName "t")
+    (Just (Go.TypeName_Unqualified (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 't')) [])))
+  , Test "renderTypeName"
+    (Go.runRender Go.renderTypeName (Go.TypeName_Unqualified (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 't')) [])))
+    "t"
   , Test "parseQualifiedIdent"
     (Go.runParse Go.parseQualifiedIdent "p._")
     (Just (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))

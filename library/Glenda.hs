@@ -610,7 +610,9 @@ module Glenda (
   -- The underlying type of @string@, @A1@, @A2@, @B1@, and @B2@ is @string@.
   -- The underlying type of @[]B1@, @B3@, and @B4@ is @[]B1@.
   {- TODO: Type -}
-  {- TODO: TypeName -}
+  Language.TypeName(..),
+  Parse.parseTypeName,
+  Render.renderTypeName,
   {- TODO: TypeLit -}
 
   -- ** #Method_sets# Method sets

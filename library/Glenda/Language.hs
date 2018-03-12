@@ -33,6 +33,7 @@ module Glenda.Language
   , StringLit(..)
   , RawStringLit(..)
   , InterpretedStringLit(..)
+  , TypeName(..)
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
@@ -239,6 +240,11 @@ newtype RawStringLit
 
 newtype InterpretedStringLit
   = InterpretedStringLit [Either UnicodeValue ByteValue]
+  deriving (Eq, Show)
+
+data TypeName
+  = TypeName_Unqualified Identifier
+  | TypeName_Qualified QualifiedIdent
   deriving (Eq, Show)
 
 data QualifiedIdent
