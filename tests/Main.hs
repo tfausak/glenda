@@ -222,6 +222,12 @@ main = runTests
   , Test "renderTypeName"
     (Go.runRender Go.renderTypeName (Go.TypeName_Unqualified (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 't')) [])))
     "t"
+  , Test "parseIdentifierList"
+    (Go.runParse Go.parseIdentifierList "i")
+    (Just (Go.IdentifierList (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'i')) []) []))
+  , Test "renderIdentifierList"
+    (Go.runRender Go.renderIdentifierList (Go.IdentifierList (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'i')) []) []))
+    "i"
   , Test "parseQualifiedIdent"
     (Go.runParse Go.parseQualifiedIdent "p._")
     (Just (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))

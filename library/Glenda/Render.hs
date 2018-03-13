@@ -37,6 +37,7 @@ module Glenda.Render
   , renderRawStringLit
   , renderInterpretedStringLit
   , renderTypeName
+  , renderIdentifierList
   , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
@@ -282,6 +283,11 @@ renderTypeName :: Render Go.TypeName
 renderTypeName x = case x of
   Go.TypeName_Unqualified y -> renderIdentifier y
   Go.TypeName_Qualified y -> renderQualifiedIdent y
+
+renderIdentifierList :: Render Go.IdentifierList
+renderIdentifierList (Go.IdentifierList x y) =
+  renderIdentifier x
+  . renderList (\ z -> mappend ", " . renderIdentifier z) y
 
 renderQualifiedIdent :: Render Go.QualifiedIdent
 renderQualifiedIdent (Go.QualifiedIdent x y) =

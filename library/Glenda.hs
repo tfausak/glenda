@@ -1431,7 +1431,9 @@ module Glenda (
 
   {- TODO: ConstDecl -}
   {- TODO: ConstSpec -}
-  {- TODO: IdentifierList -}
+  Language.IdentifierList(..),
+  Parse.parseIdentifierList,
+  Render.renderIdentifierList,
   {- TODO: ExpressionList -}
 
   -- ** #Iota# Iota
