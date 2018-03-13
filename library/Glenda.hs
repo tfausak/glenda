@@ -615,6 +615,7 @@ module Glenda (
   --
   -- The underlying type of @string@, @A1@, @A2@, @B1@, and @B2@ is @string@.
   -- The underlying type of @[]B1@, @B3@, and @B4@ is @[]B1@.
+
   {- TODO: Type -}
   Language.TypeName(..),
   Parse.parseTypeName,
@@ -719,6 +720,7 @@ module Glenda (
   -- > [1000]*float64
   -- > [3][5]int
   -- > [2][2][2]float64  // same as [2]([2]([2]float64))
+
   {- TODO: ArrayType -}
   {- TODO: ArrayLength -}
   {- TODO: ElementType -}
@@ -773,6 +775,7 @@ module Glenda (
   -- arrays are, by construction, always the same length; however with slices
   -- of slices (or arrays of slices), the inner lengths may vary dynamically.
   -- Moreover, the inner slices must be initialized individually.
+
   {- TODO: SliceType -}
 
   -- ** #Struct_types# Struct types
@@ -862,6 +865,7 @@ module Glenda (
   -- >     microsec  uint64 `protobuf:"1"`
   -- >     serverIP6 uint64 `protobuf:"2"`
   -- > }
+
   {- TODO: StructType -}
   {- TODO: FieldDecl -}
   {- TODO: EmbeddedField -}
@@ -877,6 +881,7 @@ module Glenda (
   --
   -- > *Point
   -- > *[4]int
+
   {- TODO: PointerType -}
   {- TODO: BaseType -}
 
@@ -914,6 +919,7 @@ module Glenda (
   -- > func(a, b int, z float64, opt ...interface{}) (success bool)
   -- > func(int, int, float64) (float64, *[]int)
   -- > func(n int) func(p *T)
+
   {- TODO: FunctionType -}
   {- TODO: Signature -}
   {- TODO: Result -}
@@ -1013,6 +1019,7 @@ module Glenda (
   -- > type Bad2 interface {
   -- >     Bad1
   -- > }
+
   {- TODO: InterfaceType -}
   {- TODO: MethodSpec -}
   {- TODO: MethodName -}
@@ -1054,6 +1061,7 @@ module Glenda (
   -- the number of items stored in them, with the exception of @nil@ maps. A
   -- @nil@ map is equivalent to an empty map except that no elements may be
   -- added.
+
   {- TODO: MapType -}
   {- TODO: KeyType -}
 
@@ -1105,6 +1113,7 @@ module Glenda (
   -- as first-in-first-out queues. For example, if one goroutine sends values
   -- on a channel and a second goroutine receives them, the values are
   -- received in the order sent.
+
   {- TODO: ChannelType -}
 
   -- * #Properties_of_types_and_values# Properties of types and values
@@ -1257,6 +1266,7 @@ module Glenda (
   --     <#Select_statements \"select\"> statement acts as an implicit block.
   --
   -- Blocks nest and influence <#Declarations_and_scope scoping>.
+
   {- TODO: Block -}
   {- TODO: StatementList -}
 
@@ -1309,6 +1319,7 @@ module Glenda (
   -- name does not appear in any scope. Its purpose is to identify the files
   -- belonging to the same <#Packages package> and to specify the default
   -- package name for import declarations.
+
   {- TODO: Declaration -}
   {- TODO: TopLevelDecl -}
 
@@ -1417,6 +1428,7 @@ module Glenda (
   -- >     Partyday
   -- >     numberOfDays  // this constant is not exported
   -- > )
+
   {- TODO: ConstDecl -}
   {- TODO: ConstSpec -}
   {- TODO: IdentifierList -}
@@ -1472,6 +1484,7 @@ module Glenda (
   --
   -- > TypeDecl = "type" ( TypeSpec | "(" { TypeSpec ";" } ")" ) .
   -- > TypeSpec = AliasDecl | TypeDef .
+
   {- TODO: TypeDecl -}
   {- TODO: TypeSpec -}
 
@@ -1487,6 +1500,7 @@ module Glenda (
   -- >     nodeList = []*Node  // nodeList and []*Node are identical types
   -- >     Polar    = polar    // Polar and polar denote identical types
   -- > )
+
   {- TODO: AliasDecl -}
 
   -- *** #Type_definitions# Type definitions
@@ -1557,6 +1571,7 @@ module Glenda (
   -- > func (tz TimeZone) String() string {
   -- >     return fmt.Sprintf("GMT%+dh", tz)
   -- > }
+
   {- TODO: TypeDef -}
 
   -- ** #Variable_declarations# Variable declarations
@@ -1599,6 +1614,7 @@ module Glenda (
   -- Implementation restriction: A compiler may make it illegal to declare a
   -- variable inside a <#Function_declarations function body> if the variable
   -- is never used.
+
   {- TODO: VarDecl -}
   {- TODO: VarSpec -}
 
@@ -1636,6 +1652,7 @@ module Glenda (
   -- contexts such as the initializers for <#If_statements \"if\">,
   -- <#For_statements \"for\">, or <#Switch_statements \"switch\">
   -- statements, they can be used to declare local temporary variables.
+
   {- TODO: ShortVarDecl -}
 
   -- ** #Function_declarations# Function declarations
@@ -1671,6 +1688,7 @@ module Glenda (
   -- > }
   -- >
   -- > func flushICache(begin, end uintptr)  // implemented externally
+
   {- TODO: FunctionDecl -}
   {- TODO: FunctionName -}
   {- TODO: FunctionBody -}
@@ -1723,6 +1741,7 @@ module Glenda (
   -- > func(p *Point, factor float64)
   --
   -- However, a function declared this way is not a method.
+
   {- TODO: MethodDecl -}
   {- TODO: Receiver -}
 
@@ -1744,6 +1763,7 @@ module Glenda (
   -- > Literal     = BasicLit | CompositeLit | FunctionLit .
   -- > BasicLit    = int_lit | float_lit | imaginary_lit | rune_lit | string_lit .
   -- > OperandName = identifier | QualifiedIdent.
+
   {- TODO: Operand -}
   {- TODO: Literal -}
   {- TODO: BasicLit -}
@@ -1899,6 +1919,7 @@ module Glenda (
   -- >     "C0": 16.35, "D0": 18.35, "E0": 20.60, "F0": 21.83,
   -- >     "G0": 24.50, "A0": 27.50, "B0": 30.87,
   -- > }
+
   {- TODO: CompositeLit -}
   {- TODO: LiteralType -}
   {- TODO: LiteralValue -}
@@ -1925,6 +1946,7 @@ module Glenda (
   -- a surrounding function. Those variables are then shared between the
   -- surrounding function and the function literal, and they survive as long
   -- as they are accessible.
+
   {- TODO: FunctionLit -}
 
   -- ** #Primary_expressions# Primary expressions
@@ -1956,6 +1978,7 @@ module Glenda (
   -- > s[i : j + 1]
   -- > obj.color
   -- > f.p[i].x()
+
   {- TODO: PrimaryExpr -}
   {- TODO: Selector -}
   {- TODO: Index -}
@@ -2126,6 +2149,7 @@ module Glenda (
   -- It is legal to derive a function value from a method of an interface
   -- type. The resulting function takes an explicit receiver of that
   -- interface type.
+
   {- TODO: MethodExpr -}
   {- TODO: ReceiverType -}
 
@@ -2537,6 +2561,7 @@ module Glenda (
   -- > var w int64 = 1.0<<33         // 1.0<<33 is a constant shift expression
   -- > var x = a[1.0<<s]             // 1.0 has type int; x == a[0] if ints are 32bits in size
   -- > var a = make([]byte, 1.0<<s)  // 1.0 has type int; len(a) == 0 if ints are 32bits in size
+
   {- TODO: Expression -}
   {- TODO: UnaryExpr -}
   {- TODO: BinaryOp -}
@@ -2920,6 +2945,7 @@ module Glenda (
   -- There is no linguistic mechanism to convert between pointers and
   -- integers. The package <#Package_unsafe unsafe> implements this
   -- functionality under restricted circumstances.
+
   {- TODO: Conversion -}
 
   -- *** #conversions-between-numeric-types# Conversions between numeric types
@@ -3137,6 +3163,7 @@ module Glenda (
   -- >     DeferStmt .
   -- >
   -- > SimpleStmt = EmptyStmt | ExpressionStmt | SendStmt | IncDecStmt | Assignment | ShortVarDecl .
+
   {- TODO: Statement -}
   {- TODO: SimpleStmt -}
 
@@ -3200,6 +3227,7 @@ module Glenda (
   -- > Label       = identifier .
   --
   -- > Error: log.Panic("error encountered")
+
   {- TODO: LabeledStmt -}
   Language.Label(..),
   Parse.parseLabel,
@@ -3222,6 +3250,7 @@ module Glenda (
   -- > <-ch
   -- > (<-ch)
   -- > len("foo")  // illegal if len is the built-in function
+
   {- TODO: ExpressionStmt -}
 
   -- ** #Send_statements# Send statements
@@ -3242,6 +3271,7 @@ module Glenda (
   -- forever.
   --
   -- > ch <- 3  // send value 3 to channel ch
+
   {- TODO: SendStmt -}
   {- TODO: Channel -}
 
@@ -3259,6 +3289,7 @@ module Glenda (
   -- > IncDec statement    Assignment
   -- > x++                 x += 1
   -- > x--                 x -= 1
+
   {- TODO: IncDecStmt -}
 
   -- ** #Assignments# Assignments
@@ -3351,6 +3382,7 @@ module Glenda (
   --     <#Conversions converted> to its <#Constants default type>.
   -- 3.  If an untyped boolean value is assigned to a variable of interface
   --     type or the blank identifier, it is first converted to type @bool@.
+
   {- TODO: Assignment -}
   {- TODO: AssignOp -}
 
@@ -3376,6 +3408,7 @@ module Glenda (
   -- > } else {
   -- >     return y
   -- > }
+
   {- TODO: IfStmt -}
 
   -- ** #Switch_statements# Switch statements
@@ -3391,6 +3424,7 @@ module Glenda (
   -- contain types that are compared against the type of a specially
   -- annotated switch expression. The switch expression is evaluated exactly
   -- once in a switch statement.
+
   {- TODO: SwitchStmt -}
 
   -- *** #Expression_switches# Expression switches
@@ -3454,6 +3488,7 @@ module Glenda (
   -- expressions evaluating to the same constant. For instance, the current
   -- compilers disallow duplicate integer, floating point, or string
   -- constants in case expressions.
+
   {- TODO: ExprSwitchStmt -}
   {- TODO: ExprCaseClause -}
   {- TODO: ExprSwitchCase -}
@@ -3538,6 +3573,7 @@ module Glenda (
   -- executes before the guard is evaluated.
   --
   -- The \"fallthrough\" statement is not permitted in a type switch.
+
   {- TODO: TypeSwitchStmt -}
   {- TODO: TypeSwitchGuard -}
   {- TODO: TypeCaseClause -}
@@ -3551,6 +3587,7 @@ module Glenda (
   --
   -- > ForStmt = "for" [ Condition | ForClause | RangeClause ] Block .
   -- > Condition = Expression .
+
   {- TODO: ForStmt -}
   {- TODO: Condition -}
 
@@ -3590,6 +3627,7 @@ module Glenda (
   --
   -- > for cond { S() }    is the same as    for ; cond ; { S() }
   -- > for      { S() }    is the same as    for true     { S() }
+
   {- TODO: ForClause -}
   {- TODO: InitStmt -}
   {- TODO: PostStmt -}
@@ -3699,6 +3737,7 @@ module Glenda (
   -- >
   -- > // empty a channel
   -- > for range ch {}
+
   {- TODO: RangeClause -}
 
   -- ** #Go_statements# Go statements
@@ -3721,6 +3760,7 @@ module Glenda (
   --
   -- > go Server()
   -- > go func(ch chan<- bool) { for { sleep(10); ch <- true }} (c)
+
   {- TODO: GoStmt -}
 
   -- ** #Select_statements# Select statements
@@ -3797,6 +3837,7 @@ module Glenda (
   -- > }
   -- >
   -- > select {}  // block forever
+
   {- TODO: SelectStmt -}
   {- TODO: CommClause -}
   {- TODO: CommCase -}
@@ -3878,6 +3919,7 @@ module Glenda (
   -- >     }
   -- >     return
   -- > }
+
   {- TODO: ReturnStmt -}
 
   -- ** #Break_statements# Break statements
@@ -3904,6 +3946,7 @@ module Glenda (
   -- >             }
   -- >         }
   -- >     }
+
   {- TODO: BreakStmt -}
 
   -- ** #Continue_statements# Continue statements
@@ -3925,6 +3968,7 @@ module Glenda (
   -- >             row[x] = data + bias(x, y)
   -- >         }
   -- >     }
+
   {- TODO: ContinueStmt -}
 
   -- ** #Goto_statements# Goto statements
@@ -3961,6 +4005,7 @@ module Glenda (
   --
   -- is erroneous because the label @L1@ is inside the \"for\" statement\'s
   -- block but the @goto@ is not.
+
   {- TODO: GotoStmt -}
 
   -- ** #Fallthrough_statements# Fallthrough statements
@@ -4018,6 +4063,7 @@ module Glenda (
   -- >     }()
   -- >     return 0
   -- > }
+
   {- TODO: DeferStmt -}
 
   -- * #Built-in_functions# Built-in functions
@@ -4328,6 +4374,7 @@ module Glenda (
   -- variables, and constants.
   --
   -- > SourceFile       = PackageClause ";" { ImportDecl ";" } { TopLevelDecl ";" } .
+
   {- TODO: SourceFile -}
 
   -- ** #Package_clause# Package clause
