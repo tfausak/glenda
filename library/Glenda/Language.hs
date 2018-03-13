@@ -1,5 +1,6 @@
 -- | This module defines the types used to represent the Go programming
--- language.
+-- language. These are a overly specific in order to make parsing and rendering
+-- easier.
 module Glenda.Language
   ( Newline(..)
   , UnicodeChar(..)

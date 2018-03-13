@@ -1,5 +1,6 @@
--- | This module defines the functions used to render (pretty print) the Go
--- programming language.
+-- | This module defines the functions used to render the Go programming
+-- language. The results won't be particularly pretty, but they will at least
+-- be valid Go code.
 module Glenda.Render
   ( Render
   , runRender

@@ -1,9 +1,15 @@
 -- | Glenda describes the Go programming language in Haskell. It is derived
 -- from [the Go spec](https://golang.org/ref/spec). What follows is the actual
 -- spec converted from HTML to Haddock. Each EBNF production will have its
--- associated types, functions, and values listed near it. The <#Other other>
--- section contains things that aren't part of the spec.
+-- associated types, functions, and values listed near it.
 module Glenda (
+  Parse.Parse,
+  Parse.runParse,
+  Render.Render,
+  Render.runRender,
+  Version.version,
+  Version.versionString,
+
   -- | = The Go Programming Language Specification
   -- == Version of February 1, 2018
 
@@ -4697,16 +4703,6 @@ module Glenda (
   -- A struct or array type has size zero if it contains no fields (or
   -- elements, respectively) that have a size greater than zero. Two distinct
   -- zero-size variables may have the same address in memory.
-
-  -- * #Other# Other
-  -- | These things aren't part of the Go spec, but they're necessary for this
-  -- to be a useful Haskell module.
-  Version.version,
-  Version.versionString,
-  Parse.Parse,
-  Parse.runParse,
-  Render.Render,
-  Render.runRender,
 ) where
 
 import qualified Glenda.Language as Language

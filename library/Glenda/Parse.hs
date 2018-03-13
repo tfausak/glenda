@@ -1,5 +1,7 @@
 -- | This module defines the functions used to parse the Go programming
--- language.
+-- language. These aren't particularly fast, they don't provide good errors,
+-- and they require explicit semicolons. In other words, they're not exactly
+-- ready for production.
 module Glenda.Parse
   ( Parse
   , runParse
