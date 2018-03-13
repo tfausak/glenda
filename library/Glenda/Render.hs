@@ -44,6 +44,11 @@ module Glenda.Render
   , renderQualifiedIdent
   , renderFieldName
   , renderSelector
+  , renderBinaryOp
+  , renderRelOp
+  , renderAddOp
+  , renderMulOp
+  , renderUnaryOp
   , renderPackageClause
   , renderPackageName
   , renderEmptyStmt
@@ -321,6 +326,50 @@ renderFieldName (Go.FieldName x) = renderIdentifier x
 
 renderSelector :: Render Go.Selector
 renderSelector (Go.Selector x) = mappend "." . renderIdentifier x
+
+renderBinaryOp :: Render Go.BinaryOp
+renderBinaryOp x = case x of
+  Go.BinaryOp_ConditionalOr -> mappend " || "
+  Go.BinaryOp_ConditionalAnd -> mappend " && "
+  Go.BinaryOp_RelOp y -> renderRelOp y
+  Go.BinaryOp_AddOp y -> renderAddOp y
+  Go.BinaryOp_MulOp y -> renderMulOp y
+
+renderRelOp :: Render Go.RelOp
+renderRelOp x = case x of
+  Go.RelOp_Equal -> mappend " == "
+  Go.RelOp_NotEqual -> mappend " != "
+  Go.RelOp_Less -> mappend " < "
+  Go.RelOp_LessOrEqual -> mappend " <= "
+  Go.RelOp_Greater -> mappend " > "
+  Go.RelOp_GreaterOrEqual -> mappend " >= "
+
+renderAddOp :: Render Go.AddOp
+renderAddOp x = case x of
+  Go.AddOp_Sum -> mappend " + "
+  Go.AddOp_Difference -> mappend " - "
+  Go.AddOp_BitwiseOr -> mappend " | "
+  Go.AddOp_BitwiseXor -> mappend " ^ "
+
+renderMulOp :: Render Go.MulOp
+renderMulOp x = case x of
+  Go.MulOp_Product -> mappend " * "
+  Go.MulOp_Quotient -> mappend " / "
+  Go.MulOp_Remainder -> mappend " % "
+  Go.MulOp_LeftShift -> mappend " << "
+  Go.MulOp_RightShift -> mappend " >> "
+  Go.MulOp_BitwiseAnd -> mappend " & "
+  Go.MulOp_BitClear -> mappend " &^ "
+
+renderUnaryOp :: Render Go.UnaryOp
+renderUnaryOp x = case x of
+  Go.UnaryOp_Positive -> mappend "+"
+  Go.UnaryOp_Negation -> mappend "-"
+  Go.UnaryOp_Not -> mappend "!"
+  Go.UnaryOp_BitwiseComplement -> mappend "^"
+  Go.UnaryOp_Indirection -> mappend "*"
+  Go.UnaryOp_Address -> mappend "&"
+  Go.UnaryOp_Receive -> mappend "<-"
 
 renderPackageClause :: Render Go.PackageClause
 renderPackageClause (Go.PackageClause x) =

@@ -42,6 +42,11 @@ module Glenda.Language
   , QualifiedIdent(..)
   , FieldName(..)
   , Selector(..)
+  , BinaryOp(..)
+  , RelOp(..)
+  , AddOp(..)
+  , MulOp(..)
+  , UnaryOp(..)
   , PackageClause(..)
   , PackageName(..)
   , EmptyStmt(..)
@@ -285,6 +290,50 @@ newtype FieldName
 
 newtype Selector
   = Selector Identifier
+  deriving (Eq, Show)
+
+data BinaryOp
+  = BinaryOp_ConditionalOr
+  | BinaryOp_ConditionalAnd
+  | BinaryOp_RelOp RelOp
+  | BinaryOp_AddOp AddOp
+  | BinaryOp_MulOp MulOp
+  deriving (Eq, Show)
+
+data RelOp
+  = RelOp_Equal
+  | RelOp_NotEqual
+  | RelOp_Less
+  | RelOp_LessOrEqual
+  | RelOp_Greater
+  | RelOp_GreaterOrEqual
+  deriving (Eq, Show)
+
+data AddOp
+  = AddOp_Sum
+  | AddOp_Difference
+  | AddOp_BitwiseOr
+  | AddOp_BitwiseXor
+  deriving (Eq, Show)
+
+data MulOp
+  = MulOp_Product
+  | MulOp_Quotient
+  | MulOp_Remainder
+  | MulOp_LeftShift
+  | MulOp_RightShift
+  | MulOp_BitwiseAnd
+  | MulOp_BitClear
+  deriving (Eq, Show)
+
+data UnaryOp
+  = UnaryOp_Positive
+  | UnaryOp_Negation
+  | UnaryOp_Not
+  | UnaryOp_BitwiseComplement
+  | UnaryOp_Indirection
+  | UnaryOp_Address
+  | UnaryOp_Receive
   deriving (Eq, Show)
 
 newtype PackageClause

@@ -264,6 +264,36 @@ main = runTests
   , Test "renderSelector"
     (Go.runRender Go.renderSelector (Go.Selector (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 's')) [])))
     ".s"
+  , Test "parseBinaryOp"
+    (Go.runParse Go.parseBinaryOp "||")
+    (Just Go.BinaryOp_ConditionalOr)
+  , Test "renderBinaryOp"
+    (Go.runRender Go.renderBinaryOp Go.BinaryOp_ConditionalOr)
+    " || "
+  , Test "parseRelOp"
+    (Go.runParse Go.parseRelOp "==")
+    (Just Go.RelOp_Equal)
+  , Test "renderRelOp"
+    (Go.runRender Go.renderRelOp Go.RelOp_Equal)
+    " == "
+  , Test "parseAddOp"
+    (Go.runParse Go.parseAddOp "+")
+    (Just Go.AddOp_Sum)
+  , Test "renderAddOp"
+    (Go.runRender Go.renderAddOp Go.AddOp_Sum)
+    " + "
+  , Test "parseMulOp"
+    (Go.runParse Go.parseMulOp "*")
+    (Just Go.MulOp_Product)
+  , Test "renderMulOp"
+    (Go.runRender Go.renderMulOp Go.MulOp_Product)
+    " * "
+  , Test "parseUnaryOp"
+    (Go.runParse Go.parseUnaryOp "+")
+    (Just Go.UnaryOp_Positive)
+  , Test "renderUnaryOp"
+    (Go.runRender Go.renderUnaryOp Go.UnaryOp_Positive)
+    "+"
   , Test "parsePackageClause"
     (Go.runParse Go.parsePackageClause "package p")
     (Just (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))

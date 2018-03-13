@@ -49,6 +49,11 @@ module Glenda.Parse
   , parseQualifiedIdent
   , parseFieldName
   , parseSelector
+  , parseBinaryOp
+  , parseRelOp
+  , parseAddOp
+  , parseMulOp
+  , parseUnaryOp
   , parsePackageClause
   , parsePackageName
   , parseEmptyStmt
@@ -391,6 +396,55 @@ parseFieldName = Go.FieldName <$> parseIdentifier
 
 parseSelector :: Parse Go.Selector
 parseSelector = parseToken (Parse.char '.') *> (Go.Selector <$> parseIdentifier)
+
+parseBinaryOp :: Parse Go.BinaryOp
+parseBinaryOp = Parse.choice
+  [ Go.BinaryOp_ConditionalOr <$ parseToken (Parse.string "||")
+  , Go.BinaryOp_ConditionalAnd <$ parseToken (Parse.string "&&")
+  , Go.BinaryOp_RelOp <$> parseRelOp
+  , Go.BinaryOp_AddOp <$> parseAddOp
+  , Go.BinaryOp_MulOp <$> parseMulOp
+  ]
+
+parseRelOp :: Parse Go.RelOp
+parseRelOp = Parse.choice
+  [ Go.RelOp_Equal <$ parseToken (Parse.string "==")
+  , Go.RelOp_NotEqual <$ parseToken (Parse.string "!=")
+  , Go.RelOp_Less <$ parseToken (Parse.string "<")
+  , Go.RelOp_LessOrEqual <$ parseToken (Parse.string "<=")
+  , Go.RelOp_Greater <$ parseToken (Parse.string ">")
+  , Go.RelOp_GreaterOrEqual <$ parseToken (Parse.string ">=")
+  ]
+
+parseAddOp :: Parse Go.AddOp
+parseAddOp = Parse.choice
+  [ Go.AddOp_Sum <$ parseToken (Parse.string "+")
+  , Go.AddOp_Difference <$ parseToken (Parse.string "-")
+  , Go.AddOp_BitwiseOr <$ parseToken (Parse.string "|")
+  , Go.AddOp_BitwiseXor <$ parseToken (Parse.string "^")
+  ]
+
+parseMulOp :: Parse Go.MulOp
+parseMulOp = Parse.choice
+  [ Go.MulOp_Product <$ parseToken (Parse.string "*")
+  , Go.MulOp_Quotient <$ parseToken (Parse.string "/")
+  , Go.MulOp_Remainder <$ parseToken (Parse.string "%")
+  , Go.MulOp_LeftShift <$ parseToken (Parse.string "<<")
+  , Go.MulOp_RightShift <$ parseToken (Parse.string ">>")
+  , Go.MulOp_BitwiseAnd <$ parseToken (Parse.string "&")
+  , Go.MulOp_BitClear <$ parseToken (Parse.string "&^")
+  ]
+
+parseUnaryOp :: Parse Go.UnaryOp
+parseUnaryOp = Parse.choice
+  [ Go.UnaryOp_Positive <$ parseToken (Parse.string "+")
+  , Go.UnaryOp_Negation <$ parseToken (Parse.string "-")
+  , Go.UnaryOp_Not <$ parseToken (Parse.string "!")
+  , Go.UnaryOp_BitwiseComplement <$ parseToken (Parse.string "^")
+  , Go.UnaryOp_Indirection <$ parseToken (Parse.string "*")
+  , Go.UnaryOp_Address <$ parseToken (Parse.string "&")
+  , Go.UnaryOp_Receive <$ parseToken (Parse.string "<-")
+  ]
 
 parsePackageClause :: Parse Go.PackageClause
 parsePackageClause = parseToken (Parse.string "package")

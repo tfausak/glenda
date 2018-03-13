@@ -2576,11 +2576,21 @@ module Glenda (
 
   {- TODO: Expression -}
   {- TODO: UnaryExpr -}
-  {- TODO: BinaryOp -}
-  {- TODO: RelOp -}
-  {- TODO: AddOp -}
-  {- TODO: MulOp -}
-  {- TODO: UnaryOp -}
+  Language.BinaryOp(..),
+  Parse.parseBinaryOp,
+  Render.renderBinaryOp,
+  Language.RelOp(..),
+  Parse.parseRelOp,
+  Render.renderRelOp,
+  Language.AddOp(..),
+  Parse.parseAddOp,
+  Render.renderAddOp,
+  Language.MulOp(..),
+  Parse.parseMulOp,
+  Render.renderMulOp,
+  Language.UnaryOp(..),
+  Parse.parseUnaryOp,
+  Render.renderUnaryOp,
 
   -- *** #Operator_precedence# Operator precedence
   -- | Unary operators have the highest precedence. As the @++@ and @--@
