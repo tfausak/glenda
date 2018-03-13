@@ -54,6 +54,9 @@ module Glenda.Render
   , renderEmptyStmt
   , renderLabel
   , renderAssignOp
+  , renderBreakStmt
+  , renderContinueStmt
+  , renderGotoStmt
   , renderFallthroughStmt
   , renderImportDecl
   , renderImportSpec
@@ -393,6 +396,17 @@ renderAssignOp x = case x of
 
 renderFallthroughStmt :: Render Go.FallthroughStmt
 renderFallthroughStmt Go.FallthroughStmt = mappend "fallthrough"
+
+renderBreakStmt :: Render Go.BreakStmt
+renderBreakStmt (Go.BreakStmt x) =
+  mappend "break" . renderMaybe (\ y -> mappend " " . renderLabel y) x
+
+renderContinueStmt :: Render Go.ContinueStmt
+renderContinueStmt (Go.ContinueStmt x) =
+  mappend "continue" . renderMaybe (\ y -> mappend " " . renderLabel y) x
+
+renderGotoStmt :: Render Go.GotoStmt
+renderGotoStmt (Go.GotoStmt x) = mappend "goto " . renderLabel x
 
 renderImportDecl :: Render Go.ImportDecl
 renderImportDecl x = case x of

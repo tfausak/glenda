@@ -324,6 +324,24 @@ main = runTests
   , Test "renderAssignOp"
     (Go.runRender Go.renderAssignOp Go.AssignOp_Normal)
     " = "
+  , Test "parseBreakStmt"
+    (Go.runParse Go.parseBreakStmt "break")
+    (Just (Go.BreakStmt Nothing))
+  , Test "renderBreakStmt"
+    (Go.runRender Go.renderBreakStmt (Go.BreakStmt Nothing))
+    "break"
+  , Test "parseContinueStmt"
+    (Go.runParse Go.parseContinueStmt "continue")
+    (Just (Go.ContinueStmt Nothing))
+  , Test "renderContinueStmt"
+    (Go.runRender Go.renderContinueStmt (Go.ContinueStmt Nothing))
+    "continue"
+  , Test "parseGotoStmt"
+    (Go.runParse Go.parseGotoStmt "goto l")
+    (Just (Go.GotoStmt (Go.Label (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'l')) []))))
+  , Test "renderGotoStmt"
+    (Go.runRender Go.renderGotoStmt (Go.GotoStmt (Go.Label (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'l')) []))))
+    "goto l"
   , Test "parseFallthroughStmt"
     (Go.runParse Go.parseFallthroughStmt "fallthrough")
     (Just Go.FallthroughStmt)

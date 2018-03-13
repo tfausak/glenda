@@ -59,6 +59,9 @@ module Glenda.Parse
   , parseEmptyStmt
   , parseLabel
   , parseAssignOp
+  , parseBreakStmt
+  , parseContinueStmt
+  , parseGotoStmt
   , parseFallthroughStmt
   , parseImportDecl
   , parseImportSpec
@@ -466,6 +469,18 @@ parseAssignOp = Parse.choice
   , Go.AssignOp_AddOp <$> (parseAddOp <* parseToken (Parse.char '='))
   , Go.AssignOp_MulOp <$> (parseMulOp <* parseToken (Parse.char '='))
   ]
+
+parseBreakStmt :: Parse Go.BreakStmt
+parseBreakStmt = parseToken (Parse.string "break")
+  *> (Go.BreakStmt <$> parseMaybe parseLabel)
+
+parseContinueStmt :: Parse Go.ContinueStmt
+parseContinueStmt = parseToken (Parse.string "continue")
+  *> (Go.ContinueStmt <$> parseMaybe parseLabel)
+
+parseGotoStmt :: Parse Go.GotoStmt
+parseGotoStmt = parseToken (Parse.string "goto")
+  *> (Go.GotoStmt <$> parseLabel)
 
 parseFallthroughStmt :: Parse Go.FallthroughStmt
 parseFallthroughStmt =

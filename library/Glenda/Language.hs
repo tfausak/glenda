@@ -52,6 +52,9 @@ module Glenda.Language
   , EmptyStmt(..)
   , Label(..)
   , AssignOp(..)
+  , BreakStmt(..)
+  , ContinueStmt(..)
+  , GotoStmt(..)
   , FallthroughStmt(..)
   , ImportDecl(..)
   , ImportSpec(..)
@@ -357,6 +360,18 @@ data AssignOp
   = AssignOp_Normal
   | AssignOp_AddOp AddOp
   | AssignOp_MulOp MulOp
+  deriving (Eq, Show)
+
+newtype BreakStmt
+  = BreakStmt (Maybe Label)
+  deriving (Eq, Show)
+
+newtype ContinueStmt
+  = ContinueStmt (Maybe Label)
+  deriving (Eq, Show)
+
+newtype GotoStmt
+  = GotoStmt Label
   deriving (Eq, Show)
 
 data FallthroughStmt

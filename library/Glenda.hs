@@ -3970,8 +3970,9 @@ module Glenda (
   -- >             }
   -- >         }
   -- >     }
-
-  {- TODO: BreakStmt -}
+  Language.BreakStmt(..),
+  Parse.parseBreakStmt,
+  Render.renderBreakStmt,
 
   -- ** #Continue_statements# Continue statements
   -- | A \"continue\" statement begins the next iteration of the innermost
@@ -3992,8 +3993,9 @@ module Glenda (
   -- >             row[x] = data + bias(x, y)
   -- >         }
   -- >     }
-
-  {- TODO: ContinueStmt -}
+  Language.ContinueStmt(..),
+  Parse.parseContinueStmt,
+  Render.renderContinueStmt,
 
   -- ** #Goto_statements# Goto statements
   -- | A \"goto\" statement transfers control to the statement with the
@@ -4029,8 +4031,9 @@ module Glenda (
   --
   -- is erroneous because the label @L1@ is inside the \"for\" statement\'s
   -- block but the @goto@ is not.
-
-  {- TODO: GotoStmt -}
+  Language.GotoStmt(..),
+  Parse.parseGotoStmt,
+  Render.renderGotoStmt,
 
   -- ** #Fallthrough_statements# Fallthrough statements
   -- | A \"fallthrough\" statement transfers control to the first statement of
