@@ -53,6 +53,7 @@ module Glenda.Render
   , renderPackageName
   , renderEmptyStmt
   , renderLabel
+  , renderAssignOp
   , renderFallthroughStmt
   , renderImportDecl
   , renderImportSpec
@@ -331,35 +332,35 @@ renderBinaryOp :: Render Go.BinaryOp
 renderBinaryOp x = case x of
   Go.BinaryOp_ConditionalOr -> mappend " || "
   Go.BinaryOp_ConditionalAnd -> mappend " && "
-  Go.BinaryOp_RelOp y -> renderRelOp y
-  Go.BinaryOp_AddOp y -> renderAddOp y
-  Go.BinaryOp_MulOp y -> renderMulOp y
+  Go.BinaryOp_RelOp y -> mappend " " . renderRelOp y . mappend " "
+  Go.BinaryOp_AddOp y -> mappend " " . renderAddOp y . mappend " "
+  Go.BinaryOp_MulOp y -> mappend " " . renderMulOp y . mappend " "
 
 renderRelOp :: Render Go.RelOp
 renderRelOp x = case x of
-  Go.RelOp_Equal -> mappend " == "
-  Go.RelOp_NotEqual -> mappend " != "
-  Go.RelOp_Less -> mappend " < "
-  Go.RelOp_LessOrEqual -> mappend " <= "
-  Go.RelOp_Greater -> mappend " > "
-  Go.RelOp_GreaterOrEqual -> mappend " >= "
+  Go.RelOp_Equal -> mappend "=="
+  Go.RelOp_NotEqual -> mappend "!="
+  Go.RelOp_Less -> mappend "<"
+  Go.RelOp_LessOrEqual -> mappend "<="
+  Go.RelOp_Greater -> mappend ">"
+  Go.RelOp_GreaterOrEqual -> mappend ">="
 
 renderAddOp :: Render Go.AddOp
 renderAddOp x = case x of
-  Go.AddOp_Sum -> mappend " + "
-  Go.AddOp_Difference -> mappend " - "
-  Go.AddOp_BitwiseOr -> mappend " | "
-  Go.AddOp_BitwiseXor -> mappend " ^ "
+  Go.AddOp_Sum -> mappend "+"
+  Go.AddOp_Difference -> mappend "-"
+  Go.AddOp_BitwiseOr -> mappend "|"
+  Go.AddOp_BitwiseXor -> mappend "^"
 
 renderMulOp :: Render Go.MulOp
 renderMulOp x = case x of
-  Go.MulOp_Product -> mappend " * "
-  Go.MulOp_Quotient -> mappend " / "
-  Go.MulOp_Remainder -> mappend " % "
-  Go.MulOp_LeftShift -> mappend " << "
-  Go.MulOp_RightShift -> mappend " >> "
-  Go.MulOp_BitwiseAnd -> mappend " & "
-  Go.MulOp_BitClear -> mappend " &^ "
+  Go.MulOp_Product -> mappend "*"
+  Go.MulOp_Quotient -> mappend "/"
+  Go.MulOp_Remainder -> mappend "%"
+  Go.MulOp_LeftShift -> mappend "<<"
+  Go.MulOp_RightShift -> mappend ">>"
+  Go.MulOp_BitwiseAnd -> mappend "&"
+  Go.MulOp_BitClear -> mappend "&^"
 
 renderUnaryOp :: Render Go.UnaryOp
 renderUnaryOp x = case x of
@@ -383,6 +384,12 @@ renderEmptyStmt Go.EmptyStmt = id
 
 renderLabel :: Render Go.Label
 renderLabel (Go.Label x) = renderIdentifier x
+
+renderAssignOp :: Render Go.AssignOp
+renderAssignOp x = case x of
+  Go.AssignOp_Normal -> mappend " = "
+  Go.AssignOp_AddOp y -> renderAddOp y . mappend "= "
+  Go.AssignOp_MulOp y -> renderMulOp y . mappend "= "
 
 renderFallthroughStmt :: Render Go.FallthroughStmt
 renderFallthroughStmt Go.FallthroughStmt = mappend "fallthrough"

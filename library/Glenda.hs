@@ -3406,7 +3406,9 @@ module Glenda (
   --     type or the blank identifier, it is first converted to type @bool@.
 
   {- TODO: Assignment -}
-  {- TODO: AssignOp -}
+  Language.AssignOp(..),
+  Parse.parseAssignOp,
+  Render.renderAssignOp,
 
   -- ** #If_statements# If statements
   -- | \"If\" statements specify the conditional execution of two branches

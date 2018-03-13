@@ -58,6 +58,7 @@ module Glenda.Parse
   , parsePackageName
   , parseEmptyStmt
   , parseLabel
+  , parseAssignOp
   , parseFallthroughStmt
   , parseImportDecl
   , parseImportSpec
@@ -401,38 +402,38 @@ parseBinaryOp :: Parse Go.BinaryOp
 parseBinaryOp = Parse.choice
   [ Go.BinaryOp_ConditionalOr <$ parseToken (Parse.string "||")
   , Go.BinaryOp_ConditionalAnd <$ parseToken (Parse.string "&&")
-  , Go.BinaryOp_RelOp <$> parseRelOp
-  , Go.BinaryOp_AddOp <$> parseAddOp
-  , Go.BinaryOp_MulOp <$> parseMulOp
+  , Go.BinaryOp_RelOp <$> parseToken parseRelOp
+  , Go.BinaryOp_AddOp <$> parseToken parseAddOp
+  , Go.BinaryOp_MulOp <$> parseToken parseMulOp
   ]
 
 parseRelOp :: Parse Go.RelOp
 parseRelOp = Parse.choice
-  [ Go.RelOp_Equal <$ parseToken (Parse.string "==")
-  , Go.RelOp_NotEqual <$ parseToken (Parse.string "!=")
-  , Go.RelOp_Less <$ parseToken (Parse.string "<")
-  , Go.RelOp_LessOrEqual <$ parseToken (Parse.string "<=")
-  , Go.RelOp_Greater <$ parseToken (Parse.string ">")
-  , Go.RelOp_GreaterOrEqual <$ parseToken (Parse.string ">=")
+  [ Go.RelOp_Equal <$ Parse.string "=="
+  , Go.RelOp_NotEqual <$ Parse.string "!="
+  , Go.RelOp_Less <$ Parse.string "<"
+  , Go.RelOp_LessOrEqual <$ Parse.string "<="
+  , Go.RelOp_Greater <$ Parse.string ">"
+  , Go.RelOp_GreaterOrEqual <$ Parse.string ">="
   ]
 
 parseAddOp :: Parse Go.AddOp
 parseAddOp = Parse.choice
-  [ Go.AddOp_Sum <$ parseToken (Parse.string "+")
-  , Go.AddOp_Difference <$ parseToken (Parse.string "-")
-  , Go.AddOp_BitwiseOr <$ parseToken (Parse.string "|")
-  , Go.AddOp_BitwiseXor <$ parseToken (Parse.string "^")
+  [ Go.AddOp_Sum <$ Parse.string "+"
+  , Go.AddOp_Difference <$ Parse.string "-"
+  , Go.AddOp_BitwiseOr <$ Parse.string "|"
+  , Go.AddOp_BitwiseXor <$ Parse.string "^"
   ]
 
 parseMulOp :: Parse Go.MulOp
 parseMulOp = Parse.choice
-  [ Go.MulOp_Product <$ parseToken (Parse.string "*")
-  , Go.MulOp_Quotient <$ parseToken (Parse.string "/")
-  , Go.MulOp_Remainder <$ parseToken (Parse.string "%")
-  , Go.MulOp_LeftShift <$ parseToken (Parse.string "<<")
-  , Go.MulOp_RightShift <$ parseToken (Parse.string ">>")
-  , Go.MulOp_BitwiseAnd <$ parseToken (Parse.string "&")
-  , Go.MulOp_BitClear <$ parseToken (Parse.string "&^")
+  [ Go.MulOp_Product <$ Parse.string "*"
+  , Go.MulOp_Quotient <$ Parse.string "/"
+  , Go.MulOp_Remainder <$ Parse.string "%"
+  , Go.MulOp_LeftShift <$ Parse.string "<<"
+  , Go.MulOp_RightShift <$ Parse.string ">>"
+  , Go.MulOp_BitwiseAnd <$ Parse.string "&"
+  , Go.MulOp_BitClear <$ Parse.string "&^"
   ]
 
 parseUnaryOp :: Parse Go.UnaryOp
@@ -458,6 +459,13 @@ parseEmptyStmt = Go.EmptyStmt <$ parseWhiteSpace
 
 parseLabel :: Parse Go.Label
 parseLabel = Go.Label <$> parseIdentifier
+
+parseAssignOp :: Parse Go.AssignOp
+parseAssignOp = Parse.choice
+  [ Go.AssignOp_Normal <$ parseToken (Parse.char '=')
+  , Go.AssignOp_AddOp <$> (parseAddOp <* parseToken (Parse.char '='))
+  , Go.AssignOp_MulOp <$> (parseMulOp <* parseToken (Parse.char '='))
+  ]
 
 parseFallthroughStmt :: Parse Go.FallthroughStmt
 parseFallthroughStmt =

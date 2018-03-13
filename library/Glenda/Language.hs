@@ -51,6 +51,7 @@ module Glenda.Language
   , PackageName(..)
   , EmptyStmt(..)
   , Label(..)
+  , AssignOp(..)
   , FallthroughStmt(..)
   , ImportDecl(..)
   , ImportSpec(..)
@@ -350,6 +351,12 @@ data EmptyStmt
 
 newtype Label
   = Label Identifier
+  deriving (Eq, Show)
+
+data AssignOp
+  = AssignOp_Normal
+  | AssignOp_AddOp AddOp
+  | AssignOp_MulOp MulOp
   deriving (Eq, Show)
 
 data FallthroughStmt
