@@ -1771,7 +1771,9 @@ module Glenda (
   {- TODO: Operand -}
   {- TODO: Literal -}
   {- TODO: BasicLit -}
-  {- TODO: OperandName -}
+  Language.OperandName(..),
+  Parse.parseOperandName,
+  Render.renderOperandName,
 
   -- ** #Qualified_identifiers# Qualified identifiers
   -- | A qualified identifier is an identifier qualified with a package name

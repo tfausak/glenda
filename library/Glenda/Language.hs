@@ -37,6 +37,7 @@ module Glenda.Language
   , TypeName(..)
   , IdentifierList(..)
   , FunctionName(..)
+  , OperandName(..)
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
@@ -256,6 +257,11 @@ data IdentifierList
 
 newtype FunctionName
   = FunctionName Identifier
+  deriving (Eq, Show)
+
+data OperandName
+  = OperandName_Unqualified Identifier
+  | OperandName_Qualified QualifiedIdent
   deriving (Eq, Show)
 
 data QualifiedIdent

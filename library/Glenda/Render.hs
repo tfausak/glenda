@@ -37,8 +37,9 @@ module Glenda.Render
   , renderRawStringLit
   , renderInterpretedStringLit
   , renderTypeName
-  , renderFunctionName
   , renderIdentifierList
+  , renderFunctionName
+  , renderOperandName
   , renderQualifiedIdent
   , renderPackageClause
   , renderPackageName
@@ -287,6 +288,11 @@ renderTypeName x = case x of
 
 renderFunctionName :: Render Go.FunctionName
 renderFunctionName (Go.FunctionName x) = renderIdentifier x
+
+renderOperandName :: Render Go.OperandName
+renderOperandName x = case x of
+  Go.OperandName_Unqualified y -> renderIdentifier y
+  Go.OperandName_Qualified y -> renderQualifiedIdent y
 
 renderIdentifierList :: Render Go.IdentifierList
 renderIdentifierList (Go.IdentifierList x y) =

@@ -42,8 +42,9 @@ module Glenda.Parse
   , parseRawStringLit
   , parseInterpretedStringLit
   , parseTypeName
-  , parseFunctionName
   , parseIdentifierList
+  , parseFunctionName
+  , parseOperandName
   , parseQualifiedIdent
   , parsePackageClause
   , parsePackageName
@@ -361,6 +362,12 @@ parseIdentifierList = Go.IdentifierList
 
 parseFunctionName :: Parse Go.FunctionName
 parseFunctionName = Go.FunctionName <$> parseIdentifier
+
+parseOperandName :: Parse Go.OperandName
+parseOperandName = Parse.choice
+  [ Go.OperandName_Unqualified <$> parseIdentifier
+  , Go.OperandName_Qualified <$> parseQualifiedIdent
+  ]
 
 parseQualifiedIdent :: Parse Go.QualifiedIdent
 parseQualifiedIdent = Go.QualifiedIdent

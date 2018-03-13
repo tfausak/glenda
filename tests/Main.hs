@@ -234,6 +234,12 @@ main = runTests
   , Test "renderFunctionName"
     (Go.runRender Go.renderFunctionName (Go.FunctionName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'f')) [])))
     "f"
+  , Test "parseOperandName"
+    (Go.runParse Go.parseOperandName "o")
+    (Just (Go.OperandName_Unqualified (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'o')) [])))
+  , Test "renderOperandName"
+    (Go.runRender Go.renderOperandName (Go.OperandName_Unqualified (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'o')) [])))
+    "o"
   , Test "parseQualifiedIdent"
     (Go.runParse Go.parseQualifiedIdent "p._")
     (Just (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))
