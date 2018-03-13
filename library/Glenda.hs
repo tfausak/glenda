@@ -1770,7 +1770,9 @@ module Glenda (
 
   {- TODO: Operand -}
   {- TODO: Literal -}
-  {- TODO: BasicLit -}
+  Language.BasicLit(..),
+  Parse.parseBasicLit,
+  Render.renderBasicLit,
   Language.OperandName(..),
   Parse.parseOperandName,
   Render.renderOperandName,

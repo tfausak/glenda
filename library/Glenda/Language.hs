@@ -37,6 +37,7 @@ module Glenda.Language
   , TypeName(..)
   , IdentifierList(..)
   , FunctionName(..)
+  , BasicLit(..)
   , OperandName(..)
   , QualifiedIdent(..)
   , PackageClause(..)
@@ -257,6 +258,14 @@ data IdentifierList
 
 newtype FunctionName
   = FunctionName Identifier
+  deriving (Eq, Show)
+
+data BasicLit
+  = BasicLit_IntLit IntLit
+  | BasicLit_FloatLit FloatLit
+  | BasicLit_ImaginaryLit ImaginaryLit
+  | BasicLit_RuneLit RuneLit
+  | BasicLit_StringLit StringLit
   deriving (Eq, Show)
 
 data OperandName
