@@ -47,6 +47,7 @@ module Glenda.Parse
   , parseBasicLit
   , parseOperandName
   , parseQualifiedIdent
+  , parseFieldName
   , parsePackageClause
   , parsePackageName
   , parseEmptyStmt
@@ -383,6 +384,9 @@ parseQualifiedIdent :: Parse Go.QualifiedIdent
 parseQualifiedIdent = Go.QualifiedIdent
   <$> (parsePackageName <* Parse.char '.')
   <*> parseIdentifier
+
+parseFieldName :: Parse Go.FieldName
+parseFieldName = Go.FieldName <$> parseIdentifier
 
 parsePackageClause :: Parse Go.PackageClause
 parsePackageClause = parseToken (Parse.string "package")

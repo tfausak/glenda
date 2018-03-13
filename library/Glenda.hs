@@ -1934,7 +1934,9 @@ module Glenda (
   {- TODO: ElementList -}
   {- TODO: KeyedElement -}
   {- TODO: Key -}
-  {- TODO: FieldName -}
+  Language.FieldName(..),
+  Parse.parseFieldName,
+  Render.renderFieldName,
   {- TODO: Element -}
 
   -- ** #Function_literals# Function literals
