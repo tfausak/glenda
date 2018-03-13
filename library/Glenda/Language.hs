@@ -41,6 +41,7 @@ module Glenda.Language
   , OperandName(..)
   , QualifiedIdent(..)
   , FieldName(..)
+  , Selector(..)
   , PackageClause(..)
   , PackageName(..)
   , EmptyStmt(..)
@@ -280,6 +281,10 @@ data QualifiedIdent
 
 newtype FieldName
   = FieldName Identifier
+  deriving (Eq, Show)
+
+newtype Selector
+  = Selector Identifier
   deriving (Eq, Show)
 
 newtype PackageClause

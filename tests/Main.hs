@@ -258,6 +258,12 @@ main = runTests
   , Test "renderFieldName"
     (Go.runRender Go.renderFieldName (Go.FieldName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'f')) [])))
     "f"
+  , Test "parseSelector"
+    (Go.runParse Go.parseSelector ".s")
+    (Just (Go.Selector (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 's')) [])))
+  , Test "renderSelector"
+    (Go.runRender Go.renderSelector (Go.Selector (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 's')) [])))
+    ".s"
   , Test "parsePackageClause"
     (Go.runParse Go.parsePackageClause "package p")
     (Just (Go.PackageClause (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) []))))

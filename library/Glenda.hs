@@ -1990,7 +1990,9 @@ module Glenda (
   -- > f.p[i].x()
 
   {- TODO: PrimaryExpr -}
-  {- TODO: Selector -}
+  Language.Selector(..),
+  Parse.parseSelector,
+  Render.renderSelector,
   {- TODO: Index -}
   {- TODO: Slice -}
   {- TODO: TypeAssertion -}

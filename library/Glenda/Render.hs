@@ -43,6 +43,7 @@ module Glenda.Render
   , renderOperandName
   , renderQualifiedIdent
   , renderFieldName
+  , renderSelector
   , renderPackageClause
   , renderPackageName
   , renderEmptyStmt
@@ -317,6 +318,9 @@ renderQualifiedIdent (Go.QualifiedIdent x y) =
 
 renderFieldName :: Render Go.FieldName
 renderFieldName (Go.FieldName x) = renderIdentifier x
+
+renderSelector :: Render Go.Selector
+renderSelector (Go.Selector x) = mappend "." . renderIdentifier x
 
 renderPackageClause :: Render Go.PackageClause
 renderPackageClause (Go.PackageClause x) =
