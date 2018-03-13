@@ -228,6 +228,12 @@ main = runTests
   , Test "renderIdentifierList"
     (Go.runRender Go.renderIdentifierList (Go.IdentifierList (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'i')) []) []))
     "i"
+  , Test "parseFunctionName"
+    (Go.runParse Go.parseFunctionName "f")
+    (Just (Go.FunctionName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'f')) [])))
+  , Test "renderFunctionName"
+    (Go.runRender Go.renderFunctionName (Go.FunctionName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'f')) [])))
+    "f"
   , Test "parseQualifiedIdent"
     (Go.runParse Go.parseQualifiedIdent "p._")
     (Just (Go.QualifiedIdent (Go.PackageName (Go.Identifier (Go.Letter_UnicodeLetter (Go.UnicodeLetter 'p')) [])) (Go.Identifier Go.Letter_Underscore [])))

@@ -1692,7 +1692,9 @@ module Glenda (
   -- > func flushICache(begin, end uintptr)  // implemented externally
 
   {- TODO: FunctionDecl -}
-  {- TODO: FunctionName -}
+  Language.FunctionName(..),
+  Parse.parseFunctionName,
+  Render.renderFunctionName,
   {- TODO: FunctionBody -}
 
   -- ** #Method_declarations# Method declarations

@@ -36,6 +36,7 @@ module Glenda.Language
   , InterpretedStringLit(..)
   , TypeName(..)
   , IdentifierList(..)
+  , FunctionName(..)
   , QualifiedIdent(..)
   , PackageClause(..)
   , PackageName(..)
@@ -251,6 +252,10 @@ data TypeName
 
 data IdentifierList
   = IdentifierList Identifier [Identifier]
+  deriving (Eq, Show)
+
+newtype FunctionName
+  = FunctionName Identifier
   deriving (Eq, Show)
 
 data QualifiedIdent
